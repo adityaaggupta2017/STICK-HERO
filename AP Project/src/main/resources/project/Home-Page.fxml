@@ -8,16 +8,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
       <ImageView fitHeight="597.0" fitWidth="635.0" layoutX="-48.0" layoutY="64.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../stickhero_charcater-removebg-preview.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="30.0" prefHeight="97.0" prefWidth="218.0" text="STICK" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="30.0" onMouseClicked="#onHelloButtonClick" prefHeight="97.0" prefWidth="218.0" text="STICK" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="70.0" />
          </font>
@@ -33,28 +33,32 @@
             <ColorAdjust brightness="-1.0" contrast="-1.0" hue="-1.0" saturation="-1.0" />
          </effect>
       </Label>
-      <Button layoutX="63.0" layoutY="536.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="156.0" style="-fx-background-radius: 100; -fx-background-color: GREEN;">
+      <Button layoutX="63.0" layoutY="535.0" mnemonicParsing="false" onAction="#switchToRunning" prefHeight="47.0" prefWidth="156.0" style="-fx-background-radius: 100; -fx-background-color: GREEN;">
          <effect>
             <DropShadow height="100.0" radius="42.0" width="70.0" />
          </effect>
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
+         <graphic>
+            <Text fill="#fcf3f3" stroke="#ffcfcf" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAY" textAlignment="CENTER" wrappingWidth="115.7421875">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+         </graphic>
       </Button>
-      <ImageView fitHeight="103.0" fitWidth="219.0" layoutX="32.0" layoutY="527.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../play_text-removebg-preview.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="293.0" layoutY="541.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="156.0" style="-fx-background-radius: 100; -fx-background-color: RED;" text="Button">
+      <Button layoutX="285.0" layoutY="538.0" mnemonicParsing="false" onAction="#addRelease" prefHeight="80.0" prefWidth="170.0" style="-fx-background-radius: 100; -fx-background-color: RED;">
          <effect>
             <DropShadow height="70.0" radius="42.0" width="100.0" />
          </effect>
+         <graphic>
+            <Text fill="#f2efef" strokeType="OUTSIDE" strokeWidth="0.0" text="EXIT" wrappingWidth="77.62890625">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+         </graphic>
       </Button>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="271.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../pixel_exit-removebg-preview.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

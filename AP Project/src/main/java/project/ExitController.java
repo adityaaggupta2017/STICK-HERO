@@ -3,7 +3,7 @@ package project;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class ExitController {
+public class ExitController extends HomePageController{
 
     @FXML
     private Label ExitLabel;
@@ -13,6 +13,8 @@ public class ExitController {
     }
 
     public void dontExit(){
+
+        getStored_stage().close();
 
     }
 }
