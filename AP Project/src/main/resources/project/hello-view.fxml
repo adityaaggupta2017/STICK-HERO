@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.RunningGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#handleMousePressed" onMouseReleased="#handleMouseReleased" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
-      <Label fx:id="welcomeText" alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="262.0" prefWidth="282.0" text="STICK HERO " textAlignment="CENTER" textFill="#0d0d0d" wrapText="true">
-         <font>
-            <Font name="System Bold" size="70.0" />
-         </font>
-         <effect>
-            <Bloom threshold="0.0" />
-         </effect>
-      </Label>
-      <Button layoutX="174.0" layoutY="457.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="152.0" text="PLAY">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Button>
+      <ImageView blendMode="SRC_ATOP" fitHeight="661.0" fitWidth="3800.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../background_image2.jpeg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutY="459.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+      <ImageView fitHeight="91.0" fitWidth="131.0" layoutX="14.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../hero.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,10 +1,11 @@
 package project;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -19,9 +23,12 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
-public class HomePageController {
+public class HomePageController  {
     @FXML
     private Label welcomeText;
 
@@ -35,8 +42,37 @@ public class HomePageController {
     private static Stage primary_stage;
     @FXML
     private Stage stage ;
-    private Scene scene ;
+    private static Scene scene  ;
     private Parent root ;
+
+
+    private static final int WINDOW_WIDTH = 800;
+    private static final int WINDOW_HEIGHT = 600;
+
+    private List<Rectangle> pillars = new ArrayList<>();
+
+
+
+    private int lastPillarX = 100; // Initial X position of the first pillar
+    private final int pillarHeight = 200; // Width of pillars
+    private int gapBetweenPillars = 0; // Gap between pillars
+
+
+    @FXML
+    private Rectangle rod;
+
+    private Group group1  ;
+
+    private double initialHeight = 50.0;  // Initial height of the rod
+    private double maxHeight = 150.0;     // Maximum height the rod can be extended to
+
+    private Timeline extendTimeline;
+    private Timeline dropTimeline;
+
+    private Parent newRoot ;
+
+
+    private ScaleTransition trans;
 
 
 
@@ -62,22 +98,31 @@ public class HomePageController {
         HomePageController.stored_stage = stored_stage;
     }
 
-    @FXML
-    public void switchToRunning(ActionEvent event) throws IOException {
-        // Load the new FXML file
-        Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+    public static Scene getScene() {
+        return scene;
+    }
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    @FXML
+    public void switchToRunning(ActionEvent event1) throws IOException {
+        // Load the new FXML file
+        newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        System.out.println("hello2");
         // Set up the fade transition
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), newRoot);
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
         // Get the current stage
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event1.getSource()).getScene().getWindow();
 
         // Set the scene with a transparent root first
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
         stage.setScene(scene);
+        System.out.println("hello1");
 
         // Set up the fade transition for the current scene
         FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(1000), scene.getRoot());
@@ -86,13 +131,38 @@ public class HomePageController {
 
         // After fade out, set the new root and play the fade in transition
         fadeOutTransition.setOnFinished(e -> {
+
             scene.setRoot(newRoot);
 
             fadeTransition.play();
         });
 
+        System.out.println("hello3");
+        group1 = new Group();
+        System.out.println("1");
+        rod = new Rectangle(5, 1, Color.BLACK) ;
+        System.out.println("2");
+        rod.setX(95);
+        System.out.println("3");
+        rod.setY(360);
+
+        System.out.println("4");
+        group1.getChildren().add(rod);
+        System.out.println("5");
+        ((Pane)newRoot).getChildren().add(group1) ;
+        System.out.println("6");
+
+
+
         // Play the fade out transition
         fadeOutTransition.play();
+        //        RunningGameController main_game  = new RunningGameController();
+//        main_game.start_generating();
+
+//        stage.close();
+//
+//        RunningGameController main_game  = new RunningGameController();
+//        main_game.start_generating();
     }
 
     @FXML
@@ -124,5 +194,112 @@ public class HomePageController {
         popupStage.setScene(popupScene);
         stored_stage = popupStage;
         popupStage.show();
+    }
+
+
+//    public void start_generating(Stage primaryStage) {
+//        root = new Pane();
+//        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+//
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//
+//        generatePillar(); // Initial pillar generation
+//
+//        AnimationTimer timer = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                movePillars();
+//
+//                generatePillar();
+//
+//            }
+//        };
+//        timer.start();
+//    }
+//
+//    private void generatePillar() {
+//        Random random = new Random();
+//        int pillarWidth = random.nextInt(50) + 50; // Random height for the pillar
+//        gapBetweenPillars = random.nextInt(100) + 20;
+//        Rectangle pillar = new Rectangle(lastPillarX, WINDOW_HEIGHT - pillarHeight, pillarWidth, pillarHeight);
+//        pillar.setFill(Paint.valueOf("DODGERBLUE"));
+//        root.getChildren().add(pillar);
+//        pillars.add(pillar);
+//
+//        lastPillarX += gapBetweenPillars + pillarWidth;
+//        group1.getChildren().add(pillar);
+//    }
+//
+//    private void movePillars() {
+//        for (Rectangle pillar : pillars) {
+//            pillar.setTranslateX(pillar.getTranslateX() - 1); // Adjust the movement speed of pillars
+//        }
+//    }
+
+
+    @FXML
+    public void rod_initializer() {
+        trans = new ScaleTransition();
+
+        rod = new Rectangle(100, 5, Color.BLACK) ;
+
+        trans.setNode(rod);
+
+        extendTimeline = new Timeline(
+                new KeyFrame(Duration.millis(16), event -> extendRod())
+        );
+        System.out.println("7");
+        System.out.println("hello4");
+        extendTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        dropTimeline = new Timeline(
+                new KeyFrame(Duration.millis(16), event -> dropRod())
+        );
+        dropTimeline.setCycleCount(Timeline.INDEFINITE);
+
+
+
+    }
+
+    @FXML
+    private void handleMousePressed(MouseEvent event) {
+        System.out.println("hello5");
+        rod_initializer();
+        // Start extending the rod when the mouse is pressed
+        extendRod();
+        System.out.println("Helloext");
+    }
+
+    @FXML
+    private void handleMouseReleased(MouseEvent event) {
+        System.out.println("hello6");
+        // Stop extending and drop the rod when the mouse is released
+        extendTimeline.stop();
+        dropTimeline.play();
+    }
+
+    private void extendRod() {
+        // Extend the rod vertically
+        System.out.println(rod.getHeight());
+        double currentHeight = rod.getHeight();
+        if (currentHeight < maxHeight) {
+            rod.setHeight(currentHeight + 2);
+            trans.setByY(currentHeight + 2);
+            trans.setDuration(Duration.millis(16));
+            trans.play();
+
+        }
+    }
+
+    private void dropRod() {
+        // Drop the rod flat on the floor
+        double currentHeight = rod.getHeight();
+        if (currentHeight > initialHeight) {
+            rod.setHeight(currentHeight - 2);
+        } else {
+            // Stop the drop animation when the rod reaches its initial height
+            dropTimeline.stop();
+        }
     }
 }
