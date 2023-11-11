@@ -64,7 +64,7 @@ public class HomePageController  {
     private static Group group1  ;
 
     private static double initialHeight = 50.0;  // Initial height of the rod
-    private static double maxHeight = 150.0;     // Maximum height the rod can be extended to
+    private static double maxHeight = 1000;     // Maximum height the rod can be extended to
 
     private static Timeline extendTimeline;
     private static Timeline dropTimeline;
@@ -277,18 +277,22 @@ public class HomePageController  {
     }
 
     private void extendRod() {
-        // Extend the rod vertically
+        // Extend the rod vertically from the top
         double currentHeight = rod.getHeight();
+        double newY = rod.getY() - 2; // Increase Y coordinate to simulate extension from the top
         if (currentHeight < maxHeight) {
             rod.setHeight(currentHeight + 2);
+            rod.setY(newY);
         }
     }
 
     private void dropRod() {
         // Drop the rod flat on the floor
         double currentHeight = rod.getHeight();
+        double newY = rod.getY() + 2; // Decrease Y coordinate to simulate dropping from the top
         if (currentHeight > initialHeight) {
             rod.setHeight(currentHeight - 2);
+            rod.setY(newY);
         } else {
             // Stop the drop animation when the rod reaches its initial height
             dropTimeline.stop();
