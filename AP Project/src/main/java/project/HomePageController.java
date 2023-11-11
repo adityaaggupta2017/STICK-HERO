@@ -49,30 +49,30 @@ public class HomePageController  {
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
 
-    private List<Rectangle> pillars = new ArrayList<>();
+    private static List<Rectangle> pillars = new ArrayList<>();
 
 
 
-    private int lastPillarX = 100; // Initial X position of the first pillar
-    private final int pillarHeight = 200; // Width of pillars
-    private int gapBetweenPillars = 0; // Gap between pillars
+    private static int lastPillarX = 100; // Initial X position of the first pillar
+    private static final int pillarHeight = 200; // Width of pillars
+    private static int gapBetweenPillars = 0; // Gap between pillars
 
 
     @FXML
-    private Rectangle rod;
+    private static Rectangle rod;
 
-    private Group group1  ;
+    private static Group group1  ;
 
-    private double initialHeight = 50.0;  // Initial height of the rod
-    private double maxHeight = 150.0;     // Maximum height the rod can be extended to
+    private static double initialHeight = 50.0;  // Initial height of the rod
+    private static double maxHeight = 150.0;     // Maximum height the rod can be extended to
 
-    private Timeline extendTimeline;
-    private Timeline dropTimeline;
+    private static Timeline extendTimeline;
+    private static Timeline dropTimeline;
 
-    private Parent newRoot ;
+    private static Parent newRoot ;
 
 
-    private ScaleTransition trans;
+    private static ScaleTransition trans;
 
 
 
@@ -109,6 +109,7 @@ public class HomePageController  {
     @FXML
     public void switchToRunning(ActionEvent event1) throws IOException {
         // Load the new FXML file
+
         newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
         System.out.println("hello2");
         // Set up the fade transition
@@ -140,8 +141,9 @@ public class HomePageController  {
         System.out.println("hello3");
         group1 = new Group();
         System.out.println("1");
-        rod = new Rectangle(5, 1, Color.BLACK) ;
+
         System.out.println("2");
+        rod_initializer();
         rod.setX(95);
         System.out.println("3");
         rod.setY(360);
@@ -242,7 +244,7 @@ public class HomePageController  {
     public void rod_initializer() {
         trans = new ScaleTransition();
 
-        rod = new Rectangle(100, 5, Color.BLACK) ;
+        rod = new Rectangle(5, 100, Color.BLACK) ;
 
         trans.setNode(rod);
 
@@ -261,19 +263,14 @@ public class HomePageController  {
 
 
     }
-
     @FXML
     private void handleMousePressed(MouseEvent event) {
-        System.out.println("hello5");
-        rod_initializer();
         // Start extending the rod when the mouse is pressed
-        extendRod();
-        System.out.println("Helloext");
+        extendTimeline.play();
     }
 
     @FXML
     private void handleMouseReleased(MouseEvent event) {
-        System.out.println("hello6");
         // Stop extending and drop the rod when the mouse is released
         extendTimeline.stop();
         dropTimeline.play();
@@ -281,14 +278,9 @@ public class HomePageController  {
 
     private void extendRod() {
         // Extend the rod vertically
-        System.out.println(rod.getHeight());
         double currentHeight = rod.getHeight();
         if (currentHeight < maxHeight) {
             rod.setHeight(currentHeight + 2);
-            trans.setByY(currentHeight + 2);
-            trans.setDuration(Duration.millis(16));
-            trans.play();
-
         }
     }
 
