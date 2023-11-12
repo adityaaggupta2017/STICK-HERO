@@ -262,6 +262,7 @@ public class HomePageController  {
 
 
 
+
     }
     @FXML
     private void handleMousePressed(MouseEvent event) {
@@ -273,7 +274,8 @@ public class HomePageController  {
     private void handleMouseReleased(MouseEvent event) {
         // Stop extending and drop the rod when the mouse is released
         extendTimeline.stop();
-        dropTimeline.play();
+
+
     }
 
     private void extendRod() {
@@ -286,16 +288,7 @@ public class HomePageController  {
         }
     }
 
-    private void dropRod() {
-        // Drop the rod flat on the floor
-        double currentHeight = rod.getHeight();
-        double newY = rod.getY() + 2; // Decrease Y coordinate to simulate dropping from the top
-        if (currentHeight > initialHeight) {
-            rod.setHeight(currentHeight - 2);
-            rod.setY(newY);
-        } else {
-            // Stop the drop animation when the rod reaches its initial height
-            dropTimeline.stop();
-        }
+    public void dropRod(){
+
     }
 }
