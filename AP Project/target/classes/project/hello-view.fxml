@@ -3,11 +3,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#handleMousePressed" onMouseReleased="#handleMouseReleased" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
-      <ImageView blendMode="SRC_ATOP" fitHeight="661.0" fitWidth="3800.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+      <ImageView blendMode="SRC_ATOP" fitHeight="661.0" fitWidth="3800.0" layoutY="1.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../background_image2.jpeg" />
          </image>
@@ -18,5 +21,21 @@
             <Image url="@../hero.png" />
          </image>
       </ImageView>
+      <StackPane layoutX="219.0" layoutY="20.0" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: null; -fx-background-insets: 0,1,1; -fx-background-radius: 0,0,0; -fx-effect: null; -fx-blend-mode: difference;">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="36.0" stroke="BLACK" strokeType="INSIDE" width="46.0" />
+            <Text fill="#dc4444" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+      <StackPane layoutX="486.0" layoutY="-55.0" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: null; -fx-background-insets: 0,1,1; -fx-background-radius: 0,0,0; -fx-effect: null; -fx-blend-mode: difference;">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="28.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+            <Text fill="#20d67b" strokeType="OUTSIDE" strokeWidth="0.0" text="11" wrappingWidth="20.9375" />
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
