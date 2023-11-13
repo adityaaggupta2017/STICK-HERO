@@ -36,6 +36,7 @@ public class HomePageController  {
     @FXML
     private Label ButtonText;
 
+    private int initialFlag = 1;
     @FXML
     private static Stage stored_stage;
 
@@ -46,6 +47,7 @@ public class HomePageController  {
     private static Scene scene  ;
     private static Parent root ;
 
+    private static ArrayList<Rectangle> Platforms;
 
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
@@ -107,6 +109,7 @@ public class HomePageController  {
         this.scene = scene;
     }
 
+
     @FXML
     public void switchToRunning(ActionEvent event1) throws IOException {
         // Load the new FXML file
@@ -144,7 +147,7 @@ public class HomePageController  {
         System.out.println("1");
 
         System.out.println("2");
-        rod_initializer();
+        general_initializer();
         rod.setX(95);
         System.out.println("3");
         rod.setY(360);
@@ -240,9 +243,29 @@ public class HomePageController  {
 //        }
 //    }
 
+    public void pillarGenerator(int initial_flag){
+        if(initial_flag == 1){
+            Random random = new Random();
+            Rectangle r1 = new Rectangle(100 , 200 , Color.DODGERBLUE);
+            r1.setY(459);
+            Platforms.add(r1);
+            initial_flag = 0;
+        }
+
+        else{
+            Random random = new Random();
+            Rectangle r1 = new Rectangle(50 + random.nextInt(50) , 200 , Color.DODGERBLUE);
+            r1.setY(459);
+            Platforms.add(r1);
+
+        }
+
+
+    }
 
     @FXML
-    public void rod_initializer() {
+    public void general_initializer() {
+
         trans = new ScaleTransition();
 
         rod = new Rectangle(5, 100, Color.BLACK) ;
@@ -251,7 +274,13 @@ public class HomePageController  {
         new_player.setX(10);
         new_player.setY(385);
 
+        Platforms = new ArrayList<Rectangle>();
+
+
+
+        pillarGenerator(initialFlag);
         group1.getChildren().add(new_player);
+        group1.getChildren().add(Platforms.get(0));
 
         trans.setNode(rod);
 
