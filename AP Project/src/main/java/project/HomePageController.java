@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class HomePageController  {
+public class HomePageController implements HomeInterface , Rod{
     @FXML
     private Label welcomeText;
 
@@ -143,19 +143,10 @@ public class HomePageController  {
         });
 
         System.out.println("hello3");
-        group1 = new Group();
-        System.out.println("1");
 
-        System.out.println("2");
+
         general_initializer();
-        rod.setX(95);
-        System.out.println("3");
-        rod.setY(360);
 
-        System.out.println("4");
-        group1.getChildren().add(rod);
-        System.out.println("5");
-        ((Pane)newRoot).getChildren().add(group1) ;
         System.out.println("6");
 
 
@@ -265,6 +256,7 @@ public class HomePageController  {
 
     @FXML
     public void general_initializer() {
+        group1 = new Group();
 
         trans = new ScaleTransition();
 
@@ -296,12 +288,21 @@ public class HomePageController  {
         );
         dropTimeline.setCycleCount(Timeline.INDEFINITE);
 
+        rod.setX(95);
+        System.out.println("3");
+        rod.setY(360);
+
+        System.out.println("4");
+        group1.getChildren().add(rod);
+        System.out.println("5");
+        ((Pane)newRoot).getChildren().add(group1) ;
 
 
 
     }
     @FXML
     private void handleMousePressed(MouseEvent event) {
+
         // Start extending the rod when the mouse is pressed
         extendTimeline.play();
     }
@@ -314,8 +315,8 @@ public class HomePageController  {
         // Start the drop animation
         dropTimeline.play();
     }
-
-    private void extendRod() {
+    @Override
+    public void extendRod() {
         // Extend the rod vertically from the top
         double currentHeight = rod.getHeight();
         double newY = rod.getY() - 2; // Increase Y coordinate to simulate extension from the top
@@ -324,7 +325,7 @@ public class HomePageController  {
             rod.setY(newY);
         }
     }
-
+    @Override
     public void dropRod(){
 
         double pivotX = rod.getX(); // X coordinate of the lower end

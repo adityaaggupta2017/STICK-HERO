@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player extends ImageView {
+
+    private CharacterController controls;
     private Cherry playerCherryProperties;
     private int player_points;
 
@@ -28,6 +30,7 @@ public class Player extends ImageView {
     public Player() {
         super();
         playerCherryProperties = new Cherry();
+
         // Set the default image for the player
         Image defaultImage = new Image("hero.png");
         setImage(defaultImage);
@@ -38,5 +41,15 @@ public class Player extends ImageView {
         setFitWidth(newWidth);
         setFitHeight(newHeight);
     }
+
+    public static void savePlayerState(){
+
+    }
+
+    //for serialization and get the saved state of the player
+    public static void getPlayerState(){
+
+    }
+
 }
 
