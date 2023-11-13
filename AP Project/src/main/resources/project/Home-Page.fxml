@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
-      <ImageView fitHeight="597.0" fitWidth="635.0" layoutX="-48.0" layoutY="64.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="597.0" fitWidth="635.0" layoutX="-48.0" layoutY="50.0" opacity="0.55" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../stickhero_charcater-removebg-preview.png" />
          </image>

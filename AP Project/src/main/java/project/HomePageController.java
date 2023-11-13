@@ -41,9 +41,9 @@ public class HomePageController  {
     @FXML
     private static Stage primary_stage;
     @FXML
-    private Stage stage ;
+    private static Stage stage ;
     private static Scene scene  ;
-    private Parent root ;
+    private static Parent root ;
 
 
     private static final int WINDOW_WIDTH = 800;
@@ -74,7 +74,7 @@ public class HomePageController  {
 
     private static ScaleTransition trans;
 
-
+    private static Player new_player ;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -245,6 +245,12 @@ public class HomePageController  {
         trans = new ScaleTransition();
 
         rod = new Rectangle(5, 100, Color.BLACK) ;
+
+        new_player = new Player();
+        new_player.setX(10);
+        new_player.setY(385);
+
+        group1.getChildren().add(new_player);
 
         trans.setNode(rod);
 

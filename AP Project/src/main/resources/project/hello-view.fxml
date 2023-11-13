@@ -13,7 +13,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutY="459.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
-      <ImageView fitHeight="91.0" fitWidth="131.0" layoutX="14.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="91.0" fitWidth="131.0" layoutX="-157.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../hero.png" />
          </image>

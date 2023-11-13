@@ -24,4 +24,14 @@ public class CharacterController implements Initializable {
 
     }
 
+    public void MoveCharacter(){
+
+    }
+
+
+    //when the character will flip to take the cherry we will use this function
+    public void FlipCharacter(){
+
+    }
+
 }
