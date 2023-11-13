@@ -274,6 +274,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         pillarGenerator(initialFlag);
         pillarGenerator(initialFlag);
+        group1.getChildren().add(new_player.getPlayerCherryProperties());
         group1.getChildren().add(new_player);
         group1.getChildren().add(Platforms.get(0));
         group1.getChildren().add(Platforms.get(1));

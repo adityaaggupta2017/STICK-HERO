@@ -40,6 +40,8 @@ public class Player extends ImageView {
 
         setFitWidth(newWidth);
         setFitHeight(newHeight);
+        playerCherryProperties.setX(590);
+        playerCherryProperties.setY(1);
     }
 
     public static void savePlayerState(){
