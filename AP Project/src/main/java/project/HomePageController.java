@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -278,10 +279,11 @@ public class HomePageController  {
 
     @FXML
     private void handleMouseReleased(MouseEvent event) {
-        // Stop extending and drop the rod when the mouse is released
+        // Stop extending the rod when the mouse is released
         extendTimeline.stop();
 
-
+        // Start the drop animation
+        dropTimeline.play();
     }
 
     private void extendRod() {
@@ -295,6 +297,13 @@ public class HomePageController  {
     }
 
     public void dropRod(){
+
+        double pivotX = rod.getX(); // X coordinate of the lower end
+        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
+        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
+        rod.getTransforms().clear(); // Clear existing transforms
+        rod.getTransforms().add(rotate); // Apply the new rotation transform
+        rotate.setAngle(90); // Rotate the rod to be horizontal
 
     }
 }
