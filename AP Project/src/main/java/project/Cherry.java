@@ -1,7 +1,17 @@
 package project;
 
-public class Cherry {
+import javafx.scene.image.ImageView;
+
+public class Cherry extends ImageView {
     private int CherryCount ;
+
+    public void getSound(){
+
+    }
+
+    public void getAnimation(){
+
+    }
 
     public int getCherryCount() {
         return CherryCount;

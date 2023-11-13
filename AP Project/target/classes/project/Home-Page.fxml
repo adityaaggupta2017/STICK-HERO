@@ -48,7 +48,7 @@
             </Text>
          </graphic>
       </Button>
-      <Button layoutX="285.0" layoutY="538.0" mnemonicParsing="false" onAction="#addRelease" prefHeight="80.0" prefWidth="170.0" style="-fx-background-radius: 100; -fx-background-color: RED;">
+      <Button layoutX="285.0" layoutY="538.0" mnemonicParsing="false" onAction="#OnExit" prefHeight="80.0" prefWidth="170.0" style="-fx-background-radius: 100; -fx-background-color: RED;">
          <effect>
             <DropShadow height="70.0" radius="42.0" width="100.0" />
          </effect>

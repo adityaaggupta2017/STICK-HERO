@@ -47,8 +47,10 @@ public class HomePageController implements HomeInterface , Rod{
     private static Scene scene  ;
     private static Parent root ;
 
+
     private static ArrayList<Rectangle> Platforms;
 
+    private static int Counter;
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
 
@@ -78,6 +80,8 @@ public class HomePageController implements HomeInterface , Rod{
     private static ScaleTransition trans;
 
     private static Player new_player ;
+
+    private static PauseMenu new_PauseMenu ;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -163,7 +167,7 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     @FXML
-    private void addRelease(ActionEvent event) throws IOException {
+    private void OnExit(ActionEvent event) throws IOException {
         // Load the FXML file for the pop-up
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Exit-Screen.fxml")));
 
@@ -235,27 +239,23 @@ public class HomePageController implements HomeInterface , Rod{
 //    }
 
     public void pillarGenerator(int initial_flag){
-        if(initial_flag == 1){
-            Random random = new Random();
-            Rectangle r1 = new Rectangle(100 , 200 , Color.DODGERBLUE);
-            r1.setY(459);
-            Platforms.add(r1);
-            initial_flag = 0;
-        }
+        System.out.println(initial_flag);
 
-        else{
-            Random random = new Random();
-            Rectangle r1 = new Rectangle(50 + random.nextInt(50) , 200 , Color.DODGERBLUE);
-            r1.setY(459);
-            Platforms.add(r1);
+        Random random = new Random();
+        Rectangle r1 = new Rectangle(100 , 200 , Color.BLACK);
+        r1.setX(Counter);
+        r1.setY(459);
+        Platforms.add(r1);
+        initial_flag = 0;
+        Counter += 300 + random.nextInt(50);
 
-        }
 
 
     }
 
     @FXML
     public void general_initializer() {
+        Counter = 0 ;
         group1 = new Group();
 
         trans = new ScaleTransition();
@@ -263,6 +263,8 @@ public class HomePageController implements HomeInterface , Rod{
         rod = new Rectangle(5, 100, Color.BLACK) ;
 
         new_player = new Player();
+
+        new_PauseMenu = new PauseMenu(new_player);
         new_player.setX(10);
         new_player.setY(385);
 
@@ -271,8 +273,10 @@ public class HomePageController implements HomeInterface , Rod{
 
 
         pillarGenerator(initialFlag);
+        pillarGenerator(initialFlag);
         group1.getChildren().add(new_player);
         group1.getChildren().add(Platforms.get(0));
+        group1.getChildren().add(Platforms.get(1));
 
         trans.setNode(rod);
 

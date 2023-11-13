@@ -164,6 +164,7 @@ public class RunningGameController {
         RunningGameController.trans = trans;
     }
 
+
     public void pillarGenerator(int initial_flag){
         if(initial_flag == 1){
             Random random = new Random();
