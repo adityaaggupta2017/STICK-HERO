@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="317.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.PauseScreen">
+    <children>
+        <FontAwesomeIconView glyphName="HOME" layoutX="102.0" layoutY="275.0" size="75" wrappingWidth="70.0" />
+        <FontAwesomeIconView glyphName="PLAY" layoutX="284.0" layoutY="277.0" size="75" text="" wrappingWidth="70.0" />
+        <Text layoutX="172.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE MENU" wrappingWidth="77.13671875" />
+    </children>
+</AnchorPane>
