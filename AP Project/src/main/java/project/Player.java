@@ -26,7 +26,7 @@ public class Player extends ImageView {
     }
 
     public Player() {
-        super();
+//        super();
         playerCherryProperties = new Cherry();
         // Set the default image for the player
         Image defaultImage = new Image("hero.png");
@@ -37,6 +37,13 @@ public class Player extends ImageView {
 
         setFitWidth(newWidth);
         setFitHeight(newHeight);
+    }
+
+    public static void setPlayerState(){
+
+    }
+    public static void getPlayerState(){
+
     }
 }
 
