@@ -1,7 +1,30 @@
 package project;
 
-public class Cherry {
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Cherry extends ImageView {
     private int CherryCount ;
+
+
+    public Cherry(){
+        Image defaultImage = new Image("Cherry.png");
+        setImage(defaultImage);
+
+        double newWidth = 40;
+        double newHeight = 40;
+
+        setFitWidth(newWidth);
+        setFitHeight(newHeight);
+    }
+
+    public void getSound(){
+
+    }
+
+    public void getAnimation(){
+
+    }
 
     public int getCherryCount() {
         return CherryCount;
