@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -74,6 +75,7 @@ public class HomePageController implements HomeInterface , Rod{
     private static Timeline extendTimeline;
     private static Timeline dropTimeline;
 
+    private static Timeline moveTimeLine ;
     private static Parent newRoot ;
 
 
@@ -82,6 +84,10 @@ public class HomePageController implements HomeInterface , Rod{
     private static Player new_player ;
 
     private static PauseMenu new_PauseMenu ;
+
+    private int currentPlatformIndex = 0;
+
+    private ArrayList<TranslateTransition> TransitionArray;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -125,7 +131,7 @@ public class HomePageController implements HomeInterface , Rod{
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
-        // Get the current stage
+
         stage = (Stage) ((Node) event1.getSource()).getScene().getWindow();
 
         // Set the scene with a transparent root first
@@ -255,6 +261,8 @@ public class HomePageController implements HomeInterface , Rod{
 
     @FXML
     public void general_initializer() {
+        Random random1 = new Random();
+
         Counter = 0 ;
         group1 = new Group();
 
@@ -265,19 +273,39 @@ public class HomePageController implements HomeInterface , Rod{
         new_player = new Player();
 
         new_PauseMenu = new PauseMenu(new_player);
+
+        TransitionArray = new ArrayList<>();
         new_player.setX(10);
         new_player.setY(385);
 
         Platforms = new ArrayList<Rectangle>();
 
 
+//
+//        pillarGenerator(initialFlag);
+//        pillarGenerator(initialFlag);
+        for (int i = 0; i < 1000; i++) {
+            Rectangle rectangle ;
 
-        pillarGenerator(initialFlag);
-        pillarGenerator(initialFlag);
+            if (i == 0){
+                rectangle = new Rectangle(100, 200, Color.BLACK);
+            }
+            else{
+                int x = 50 + random1.nextInt(50);
+                System.out.println(x);
+                rectangle = new Rectangle(x, 200, Color.BLACK); // Modify size/color as needed
+            }
+
+            rectangle.setX(i * 300); // Set X position based on the loop index
+            rectangle.setY(459); // Set Y position
+
+            Platforms.add(rectangle);
+            group1.getChildren().add(rectangle);
+        }
         group1.getChildren().add(new_player.getPlayerCherryProperties());
         group1.getChildren().add(new_player);
-        group1.getChildren().add(Platforms.get(0));
-        group1.getChildren().add(Platforms.get(1));
+//        group1.getChildren().add(Platforms.get(0));
+//        group1.getChildren().add(Platforms.get(1));
 
         trans.setNode(rod);
 
@@ -291,6 +319,8 @@ public class HomePageController implements HomeInterface , Rod{
         dropTimeline = new Timeline(
                 new KeyFrame(Duration.millis(16), event -> dropRod())
         );
+
+        moveTimeLine = new Timeline(new KeyFrame(Duration.millis(16) , event -> movePlatforms()));
         dropTimeline.setCycleCount(Timeline.INDEFINITE);
 
         rod.setX(95);
@@ -319,6 +349,8 @@ public class HomePageController implements HomeInterface , Rod{
 
         // Start the drop animation
         dropTimeline.play();
+
+        moveTimeLine.play();
     }
     @Override
     public void extendRod() {
@@ -329,9 +361,11 @@ public class HomePageController implements HomeInterface , Rod{
             rod.setHeight(currentHeight + 2);
             rod.setY(newY);
         }
+
     }
     @Override
     public void dropRod(){
+
 
         double pivotX = rod.getX(); // X coordinate of the lower end
         double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
@@ -339,6 +373,25 @@ public class HomePageController implements HomeInterface , Rod{
         rod.getTransforms().clear(); // Clear existing transforms
         rod.getTransforms().add(rotate); // Apply the new rotation transform
         rotate.setAngle(90); // Rotate the rod to be horizontal
+        int count1 = 0;
+
+    }
+
+    public void movePlatforms(){
+
+        for (int i = 0; i<Platforms.size() ; i++) {
+            TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+            moveTransition.setByX(-300 ); // Adjust the movement speed of rectangles
+            TransitionArray.add(moveTransition);
+        }
+
+        for (int i = 0; i<TransitionArray.size() ; i++){
+            TransitionArray.get(i).play();
+        }
+
+    }
+
+    public void playMoveTransition(){
 
     }
 }
