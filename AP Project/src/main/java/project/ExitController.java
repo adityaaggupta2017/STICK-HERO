@@ -10,12 +10,12 @@ public class ExitController extends HomePageController{
     private Label ExitLabel;
 
     public void exit(){
-        HomePageController.fadeOut(volumeProperty1,0.5,0.0);
+//        HomePageController.fadeOut(volumeProperty1,0.5,0.0);
         System.exit(0);
     }
 
     public void dontExit(){
-        HomePageController.fadeIn(volumeProperty1,0.5,1.0);
+//        HomePageController.fadeIn(volumeProperty1,0.5,1.0);
         getStored_stage().close();
 
     }

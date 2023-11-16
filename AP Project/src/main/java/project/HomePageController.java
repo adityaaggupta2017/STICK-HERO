@@ -140,7 +140,7 @@ public class HomePageController implements HomeInterface , Rod{
     @FXML
     public void switchToRunning(ActionEvent event1) throws IOException {
         // Load the new FXML file
-        fadeOut(volumeProperty1,1.0,0.0);
+//        fadeOut(volumeProperty1,1.0,0.0);
 
         newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
         System.out.println("hello2");
@@ -151,13 +151,13 @@ public class HomePageController implements HomeInterface , Rod{
         fadeTransition.play();
 
 
-        String mediaPath = "Running game.mp3"; // Replace with the actual path to your audio file
-        Media media = new Media(new File(mediaPath).toURI().toString());
-        mediaPlayer2 = new MediaPlayer(media);
-        mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
-        volumeProperty2 = new SimpleDoubleProperty(1.0);
-        mediaPlayer2.volumeProperty().bindBidirectional(volumeProperty2);
-        fadeIn(volumeProperty2,0.0,1.0);
+//        String mediaPath = "Running game.mp3"; // Replace with the actual path to your audio file
+//        Media media = new Media(new File(mediaPath).toURI().toString());
+//        mediaPlayer2 = new MediaPlayer(media);
+//        mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
+//        volumeProperty2 = new SimpleDoubleProperty(1.0);
+//        mediaPlayer2.volumeProperty().bindBidirectional(volumeProperty2);
+//        fadeIn(volumeProperty2,0.0,1.0);
 
         stage = (Stage) ((Node) event1.getSource()).getScene().getWindow();
 
@@ -189,7 +189,7 @@ public class HomePageController implements HomeInterface , Rod{
 
 
         // Play the fade out transition
-        fadeOut(volumeProperty2,1.0,0.0);
+//        fadeOut(volumeProperty2,1.0,0.0);
         fadeOutTransition.play();
         //        RunningGameController main_game  = new RunningGameController();
 //        main_game.start_generating();
@@ -202,7 +202,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     @FXML
     private void OnExit(ActionEvent event) throws IOException {
-        fadeOut(volumeProperty1,1.0,0.5);
+//        fadeOut(volumeProperty1,1.0,0.5);
         // Load the FXML file for the pop-up
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Exit-Screen.fxml")));
 
@@ -293,13 +293,13 @@ public class HomePageController implements HomeInterface , Rod{
         Random random1 = new Random();
 
         //Setting the background music for the main screen
-        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
-        Media media = new Media(new File(mediaPath).toURI().toString());
-        mediaPlayer1 = new MediaPlayer(media);
-        mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
-        volumeProperty1 = new SimpleDoubleProperty(1.0);
-        mediaPlayer1.volumeProperty().bindBidirectional(volumeProperty1);
-        fadeIn(volumeProperty1,0.0,1.0);
+//        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
+//        Media media = new Media(new File(mediaPath).toURI().toString());
+//        mediaPlayer1 = new MediaPlayer(media);
+//        mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
+//        volumeProperty1 = new SimpleDoubleProperty(1.0);
+//        mediaPlayer1.volumeProperty().bindBidirectional(volumeProperty1);
+//        fadeIn(volumeProperty1,0.0,1.0);
 
         Counter = 0 ;
         group1 = new Group();
@@ -373,26 +373,26 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     }
-    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
-        // Create a Timeline for fade-in effect
-        Timeline fadeInTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
-                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
-        );
-
-        fadeInTimeline.play();
-    }
-
-
-    public static void fadeOut(DoubleProperty volumeProperty, double d1, double d2) {
-        // Create a Timeline for fade-out effect
-        Timeline fadeOutTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
-                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
-        );
-
-        fadeOutTimeline.play();
-    }
+//    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
+//        // Create a Timeline for fade-in effect
+//        Timeline fadeInTimeline = new Timeline(
+//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+//        );
+//
+//        fadeInTimeline.play();
+//    }
+//
+//
+//    public static void fadeOut(DoubleProperty volumeProperty, double d1, double d2) {
+//        // Create a Timeline for fade-out effect
+//        Timeline fadeOutTimeline = new Timeline(
+//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+//        );
+//
+//        fadeOutTimeline.play();
+//    }
 
 
     @FXML
