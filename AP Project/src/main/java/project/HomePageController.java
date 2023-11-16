@@ -1,6 +1,8 @@
 package project;
 
 import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,12 +25,17 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.function.DoubleUnaryOperator;
 
 public class HomePageController implements HomeInterface , Rod{
     @FXML
@@ -89,6 +96,16 @@ public class HomePageController implements HomeInterface , Rod{
 
     private ArrayList<TranslateTransition> TransitionArray;
 
+    private static MediaPlayer mediaPlayer1;
+    private static MediaPlayer mediaPlayer2;
+    static FadeTransition fadeOutSound1;
+    static FadeTransition fadeOutSound2;
+    static FadeTransition fadeInSound1;
+    static FadeTransition fadeInSound2;
+    static DoubleProperty volumeProperty1;
+    static DoubleProperty volumeProperty2;
+
+
     @FXML
     protected void onHelloButtonClick() {
 //        ButtonText.setText("Welcome to JavaFX Application!");
@@ -123,6 +140,7 @@ public class HomePageController implements HomeInterface , Rod{
     @FXML
     public void switchToRunning(ActionEvent event1) throws IOException {
         // Load the new FXML file
+        fadeOut(volumeProperty1,1.0,0.0);
 
         newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
         System.out.println("hello2");
@@ -131,6 +149,15 @@ public class HomePageController implements HomeInterface , Rod{
         fadeTransition.setFromValue(0.0);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
+
+
+        String mediaPath = "Running game.mp3"; // Replace with the actual path to your audio file
+        Media media = new Media(new File(mediaPath).toURI().toString());
+        mediaPlayer2 = new MediaPlayer(media);
+        mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
+        volumeProperty2 = new SimpleDoubleProperty(1.0);
+        mediaPlayer2.volumeProperty().bindBidirectional(volumeProperty2);
+        fadeIn(volumeProperty2,0.0,1.0);
 
         stage = (Stage) ((Node) event1.getSource()).getScene().getWindow();
 
@@ -162,6 +189,7 @@ public class HomePageController implements HomeInterface , Rod{
 
 
         // Play the fade out transition
+        fadeOut(volumeProperty2,1.0,0.0);
         fadeOutTransition.play();
         //        RunningGameController main_game  = new RunningGameController();
 //        main_game.start_generating();
@@ -174,6 +202,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     @FXML
     private void OnExit(ActionEvent event) throws IOException {
+        fadeOut(volumeProperty1,1.0,0.5);
         // Load the FXML file for the pop-up
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Exit-Screen.fxml")));
 
@@ -263,6 +292,15 @@ public class HomePageController implements HomeInterface , Rod{
     public void general_initializer() {
         Random random1 = new Random();
 
+        //Setting the background music for the main screen
+        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
+        Media media = new Media(new File(mediaPath).toURI().toString());
+        mediaPlayer1 = new MediaPlayer(media);
+        mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE); // Play indefinitely
+        volumeProperty1 = new SimpleDoubleProperty(1.0);
+        mediaPlayer1.volumeProperty().bindBidirectional(volumeProperty1);
+        fadeIn(volumeProperty1,0.0,1.0);
+
         Counter = 0 ;
         group1 = new Group();
 
@@ -308,7 +346,7 @@ public class HomePageController implements HomeInterface , Rod{
 //        group1.getChildren().add(Platforms.get(1));
 
         trans.setNode(rod);
-
+        rod.setHeight(2);
         extendTimeline = new Timeline(
                 new KeyFrame(Duration.millis(16), event -> extendRod())
         );
@@ -335,14 +373,37 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     }
+    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
+        // Create a Timeline for fade-in effect
+        Timeline fadeInTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+        );
+
+        fadeInTimeline.play();
+    }
+
+
+    public static void fadeOut(DoubleProperty volumeProperty, double d1, double d2) {
+        // Create a Timeline for fade-out effect
+        Timeline fadeOutTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+        );
+
+        fadeOutTimeline.play();
+    }
+
+
+    @FXML
+    private void handleMousePressed2(MouseEvent event){
+        CharacterController.FlipCharacter();
+    }
     @FXML
     private void handleMousePressed(MouseEvent event) {
 
         // Start extending the rod when the mouse is pressed
         extendTimeline.play();
-
-
-
     }
 
     @FXML
@@ -369,13 +430,22 @@ public class HomePageController implements HomeInterface , Rod{
     @Override
     public void dropRod(){
 
+        RotateTransition rotate1 = new RotateTransition(Duration.seconds(2),rod);
+        rotate1.setAxis(Rotate.Y_AXIS);
 
-        double pivotX = rod.getX(); // X coordinate of the lower end
-        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
-        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
-        rod.getTransforms().clear(); // Clear existing transforms
-        rod.getTransforms().add(rotate); // Apply the new rotation transform
-        rotate.setAngle(90); // Rotate the rod to be horizontal
+        // Set the starting and ending angles (360 degrees means one full rotation)
+        rotate1.setFromAngle(90);
+        rotate1.setToAngle(0);
+        rotate1.setAutoReverse(false);
+        rotate1.play();
+
+
+//        double pivotX = rod.getX(); // X coordinate of the lower end
+//        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
+//        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
+//        rod.getTransforms().clear(); // Clear existing transforms
+//        rod.getTransforms().add(rotate); // Apply the new rotation transform
+//        rotate.setAngle(90); // Rotate the rod to be horizontal
         int count1 = 0;
 
     }
