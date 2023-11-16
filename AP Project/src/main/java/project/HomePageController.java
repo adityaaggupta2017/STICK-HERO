@@ -340,6 +340,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         // Start extending the rod when the mouse is pressed
         extendTimeline.play();
+
     }
 
     @FXML
