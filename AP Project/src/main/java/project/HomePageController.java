@@ -467,12 +467,15 @@ public class HomePageController implements HomeInterface , Rod{
             System.out.println("l2");
         }
 
+        TranslateTransition moveRod = new TranslateTransition(Duration.millis(500),rod);
+        moveRod.setByX(-300 + Platforms.get(current_Platform).getWidth() - Platforms.get(current_Platform+1).getWidth());
+        TransitionArray.add(moveRod);
         for (int i = 0; i<TransitionArray.size() ; i++){
             TransitionArray.get(i).play();
         }
 
 
-        group1.getChildren().remove(rod);
+//        group1.getChildren().remove(rod);
 
         Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
         new_rod.setHeight(2);
