@@ -27,6 +27,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 
 import java.io.File;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.DoubleUnaryOperator;
+
 
 public class HomePageController implements HomeInterface , Rod{
     @FXML
@@ -94,10 +96,22 @@ public class HomePageController implements HomeInterface , Rod{
 
     private int currentPlatformIndex = 0;
 
-    private ArrayList<TranslateTransition> TransitionArray;
+    private static ArrayList<TranslateTransition> TransitionArray;
+
+    private static final Duration ROTATE_DURATION = Duration.seconds(2);
+
+
+    private int current_Platform = 0;
+
+    private double rod_length = 0;
 
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
+
+    private static MediaPlayer mediaPlayer;
+
+    private static String mediaPath;
+    private static Media media;
     static FadeTransition fadeOutSound1;
     static FadeTransition fadeOutSound2;
     static FadeTransition fadeInSound1;
@@ -151,6 +165,7 @@ public class HomePageController implements HomeInterface , Rod{
         fadeTransition.play();
 
 
+
 //        String mediaPath = "Running game.mp3"; // Replace with the actual path to your audio file
 //        Media media = new Media(new File(mediaPath).toURI().toString());
 //        mediaPlayer2 = new MediaPlayer(media);
@@ -164,6 +179,7 @@ public class HomePageController implements HomeInterface , Rod{
         // Set the scene with a transparent root first
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
         stage.setScene(scene);
+        stage.setResizable(false);
         System.out.println("hello1");
 
         // Set up the fade transition for the current scene
@@ -191,6 +207,8 @@ public class HomePageController implements HomeInterface , Rod{
         // Play the fade out transition
 //        fadeOut(volumeProperty2,1.0,0.0);
         fadeOutTransition.play();
+
+
         //        RunningGameController main_game  = new RunningGameController();
 //        main_game.start_generating();
 
@@ -363,12 +381,21 @@ public class HomePageController implements HomeInterface , Rod{
 
         rod.setX(95);
         System.out.println("3");
-        rod.setY(360);
+        rod.setY(457);
 
         System.out.println("4");
         group1.getChildren().add(rod);
         System.out.println("5");
         ((Pane)newRoot).getChildren().add(group1) ;
+
+
+        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setAutoPlay(true);
+
+
 
 
 
@@ -412,9 +439,9 @@ public class HomePageController implements HomeInterface , Rod{
         extendTimeline.stop();
 
         // Start the drop animation
-        dropTimeline.play();
+        dropRod();
 
-        moveTimeLine.play();
+//        moveTimeLine.play();
     }
     @Override
     public void extendRod() {
@@ -428,39 +455,101 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
     @Override
-    public void dropRod(){
+    public void dropRod() {
+        System.out.println("hello1");
+        double pivotX = rod.getX(); // X coordinate of the lower end
+        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
+        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
+        rod.getTransforms().clear(); // Clear existing transforms
+        rod.getTransforms().add(rotate); // Apply the new rotation transform
 
-        RotateTransition rotate1 = new RotateTransition(Duration.seconds(2),rod);
-        rotate1.setAxis(Rotate.Y_AXIS);
+        // Gradually rotate the rod to be horizontal
+        Duration duration = Duration.millis(500); // Duration for the drop animation
+        int angle = 90; // The final angle for the rotation
 
-        // Set the starting and ending angles (360 degrees means one full rotation)
-        rotate1.setFromAngle(90);
-        rotate1.setToAngle(0);
-        rotate1.setAutoReverse(false);
-        rotate1.play();
+        KeyValue keyValue = new KeyValue(rotate.angleProperty(), angle);
+        KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(e->movePlatforms());
 
-//        double pivotX = rod.getX(); // X coordinate of the lower end
-//        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
-//        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
-//        rod.getTransforms().clear(); // Clear existing transforms
-//        rod.getTransforms().add(rotate); // Apply the new rotation transform
-//        rotate.setAngle(90); // Rotate the rod to be horizontal
-        int count1 = 0;
+        timeline.play();
+
 
     }
+
 
     public void movePlatforms(){
 
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-            moveTransition.setByX(-300 ); // Adjust the movement speed of rectangles
+            moveTransition.setByX(-rod.getHeight()); // Adjust the movement speed of rectangles
+            System.out.println("l1");
             TransitionArray.add(moveTransition);
+            System.out.println("l2");
         }
 
+
+//        TranslateTransition movePlayer = new TranslateTransition(Duration.millis(500) , new_player);
+//        System.out.println(new_player.getX());
+//        movePlayer.setByX(300+Platforms.get(current_Platform+1).getWidth() - rod.getHeight() - Platforms.get(current_Platform).getWidth());
+//
+//        TransitionArray.add(movePlayer);
+
+        TranslateTransition moveRod = new TranslateTransition(Duration.millis(500),rod);
+        moveRod.setByX(-rod.getHeight());
+
+        moveRod.setOnFinished(event -> {
+
+            System.out.println("hjfefe");
+            double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+
+            Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+            new_rod.setHeight(2);
+            new_rod.setX(new_player.getX()+85);
+            new_rod.setY(457);
+
+
+
+            TransitionArray.clear();
+
+            for (int i = 0; i<Platforms.size() ; i++) {
+                TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                System.out.println("l1");
+                TransitionArray.add(moveTransition);
+                System.out.println("l2");
+            }
+
+            TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+            moveRod1.setByX(-newX);
+            TransitionArray.add(moveRod1);
+
+            for (int i = 0; i<TransitionArray.size() ; i++){
+                TransitionArray.get(i).play();
+            }
+
+            TransitionArray.clear();
+
+            rod = new_rod;
+
+            group1.getChildren().add(rod);
+
+            current_Platform ++ ;
+
+
+        });
+        TransitionArray.add(moveRod);
         for (int i = 0; i<TransitionArray.size() ; i++){
             TransitionArray.get(i).play();
         }
+
+        System.out.println(new_player.getX());
+
+//        group1.getChildren().remove(rod);
+        rod_length = rod.getHeight();
+
+
 
     }
 
