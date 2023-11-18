@@ -94,7 +94,10 @@ public class HomePageController implements HomeInterface , Rod{
 
     private int currentPlatformIndex = 0;
 
-    private ArrayList<TranslateTransition> TransitionArray;
+    private static ArrayList<TranslateTransition> TransitionArray;
+
+    private static final Duration ROTATE_DURATION = Duration.seconds(2);
+
 
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
@@ -363,7 +366,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         rod.setX(95);
         System.out.println("3");
-        rod.setY(360);
+        rod.setY(457);
 
         System.out.println("4");
         group1.getChildren().add(rod);
@@ -412,9 +415,9 @@ public class HomePageController implements HomeInterface , Rod{
         extendTimeline.stop();
 
         // Start the drop animation
-        dropTimeline.play();
+        dropRod();
 
-        moveTimeLine.play();
+//        moveTimeLine.play();
     }
     @Override
     public void extendRod() {
@@ -428,39 +431,55 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
     @Override
-    public void dropRod(){
+    public void dropRod() {
+        System.out.println("hello1");
+        double pivotX = rod.getX(); // X coordinate of the lower end
+        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
+        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
+        rod.getTransforms().clear(); // Clear existing transforms
+        rod.getTransforms().add(rotate); // Apply the new rotation transform
 
-        RotateTransition rotate1 = new RotateTransition(Duration.seconds(2),rod);
-        rotate1.setAxis(Rotate.Y_AXIS);
+        // Gradually rotate the rod to be horizontal
+        Duration duration = Duration.millis(500); // Duration for the drop animation
+        int angle = 90; // The final angle for the rotation
 
-        // Set the starting and ending angles (360 degrees means one full rotation)
-        rotate1.setFromAngle(90);
-        rotate1.setToAngle(0);
-        rotate1.setAutoReverse(false);
-        rotate1.play();
+        KeyValue keyValue = new KeyValue(rotate.angleProperty(), angle);
+        KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(e->movePlatforms());
 
-//        double pivotX = rod.getX(); // X coordinate of the lower end
-//        double pivotY = rod.getY() + rod.getHeight(); // Y coordinate of the lower end
-//        Rotate rotate = new Rotate(0, pivotX, pivotY); // Initial rotation angle is 0
-//        rod.getTransforms().clear(); // Clear existing transforms
-//        rod.getTransforms().add(rotate); // Apply the new rotation transform
-//        rotate.setAngle(90); // Rotate the rod to be horizontal
-        int count1 = 0;
+        timeline.play();
+
 
     }
+
 
     public void movePlatforms(){
 
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
             moveTransition.setByX(-300 ); // Adjust the movement speed of rectangles
+            System.out.println("l1");
             TransitionArray.add(moveTransition);
+            System.out.println("l2");
         }
 
         for (int i = 0; i<TransitionArray.size() ; i++){
             TransitionArray.get(i).play();
         }
+
+
+        group1.getChildren().remove(rod);
+
+        Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+        new_rod.setHeight(2);
+        new_rod.setX(95);
+        new_rod.setY(457);
+
+        rod = new_rod;
+
+        group1.getChildren().add(rod);
 
     }
 
