@@ -172,6 +172,7 @@ public class HomePageController implements HomeInterface , Rod{
         // Set the scene with a transparent root first
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
         stage.setScene(scene);
+        stage.setResizable(false);
         System.out.println("hello1");
 
         // Set up the fade transition for the current scene
