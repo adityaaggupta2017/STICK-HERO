@@ -2,6 +2,8 @@ package project;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -11,6 +13,7 @@ public class Player extends ImageView {
     private Cherry playerCherryProperties;
     private int player_points;
 
+    private static MediaPlayer mediaPlayer;
     public Cherry getPlayerCherryProperties() {
         return playerCherryProperties;
     }
@@ -42,6 +45,7 @@ public class Player extends ImageView {
         setFitHeight(newHeight);
         playerCherryProperties.setX(590);
         playerCherryProperties.setY(1);
+
     }
 
     public static void savePlayerState(){

@@ -38,6 +38,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.function.DoubleUnaryOperator;
 
+
 public class HomePageController implements HomeInterface , Rod{
     @FXML
     private Label welcomeText;
@@ -106,6 +107,11 @@ public class HomePageController implements HomeInterface , Rod{
 
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
+
+    private static MediaPlayer mediaPlayer;
+
+    private static String mediaPath;
+    private static Media media;
     static FadeTransition fadeOutSound1;
     static FadeTransition fadeOutSound2;
     static FadeTransition fadeInSound1;
@@ -159,6 +165,7 @@ public class HomePageController implements HomeInterface , Rod{
         fadeTransition.play();
 
 
+
 //        String mediaPath = "Running game.mp3"; // Replace with the actual path to your audio file
 //        Media media = new Media(new File(mediaPath).toURI().toString());
 //        mediaPlayer2 = new MediaPlayer(media);
@@ -200,6 +207,8 @@ public class HomePageController implements HomeInterface , Rod{
         // Play the fade out transition
 //        fadeOut(volumeProperty2,1.0,0.0);
         fadeOutTransition.play();
+
+
         //        RunningGameController main_game  = new RunningGameController();
 //        main_game.start_generating();
 
@@ -380,6 +389,15 @@ public class HomePageController implements HomeInterface , Rod{
         ((Pane)newRoot).getChildren().add(group1) ;
 
 
+        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setAutoPlay(true);
+
+
+
+
 
     }
 //    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
@@ -491,9 +509,7 @@ public class HomePageController implements HomeInterface , Rod{
             new_rod.setX(new_player.getX()+85);
             new_rod.setY(457);
 
-            rod = new_rod;
 
-            group1.getChildren().add(rod);
 
             TransitionArray.clear();
 
@@ -505,11 +521,19 @@ public class HomePageController implements HomeInterface , Rod{
                 System.out.println("l2");
             }
 
+            TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+            moveRod1.setByX(-newX);
+            TransitionArray.add(moveRod1);
+
             for (int i = 0; i<TransitionArray.size() ; i++){
                 TransitionArray.get(i).play();
             }
 
             TransitionArray.clear();
+
+            rod = new_rod;
+
+            group1.getChildren().add(rod);
 
             current_Platform ++ ;
 
