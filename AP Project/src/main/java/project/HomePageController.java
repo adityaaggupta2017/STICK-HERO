@@ -99,6 +99,8 @@ public class HomePageController implements HomeInterface , Rod{
     private static final Duration ROTATE_DURATION = Duration.seconds(2);
 
 
+    private int current_Platform = 0;
+
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
     static FadeTransition fadeOutSound1;
@@ -459,7 +461,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-            moveTransition.setByX(-300 ); // Adjust the movement speed of rectangles
+            moveTransition.setByX(-300 + Platforms.get(current_Platform).getWidth() - Platforms.get(current_Platform+1).getWidth()); // Adjust the movement speed of rectangles
             System.out.println("l1");
             TransitionArray.add(moveTransition);
             System.out.println("l2");
@@ -480,6 +482,7 @@ public class HomePageController implements HomeInterface , Rod{
         rod = new_rod;
 
         group1.getChildren().add(rod);
+        current_Platform ++ ;
 
     }
 
