@@ -27,6 +27,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 
 import java.io.File;
@@ -100,6 +101,8 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     private int current_Platform = 0;
+
+    private double rod_length = 0;
 
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
@@ -461,31 +464,67 @@ public class HomePageController implements HomeInterface , Rod{
 
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-            moveTransition.setByX(-300 + Platforms.get(current_Platform).getWidth() - Platforms.get(current_Platform+1).getWidth()); // Adjust the movement speed of rectangles
+            moveTransition.setByX(-rod.getHeight()); // Adjust the movement speed of rectangles
             System.out.println("l1");
             TransitionArray.add(moveTransition);
             System.out.println("l2");
         }
 
+
+//        TranslateTransition movePlayer = new TranslateTransition(Duration.millis(500) , new_player);
+//        System.out.println(new_player.getX());
+//        movePlayer.setByX(300+Platforms.get(current_Platform+1).getWidth() - rod.getHeight() - Platforms.get(current_Platform).getWidth());
+//
+//        TransitionArray.add(movePlayer);
+
         TranslateTransition moveRod = new TranslateTransition(Duration.millis(500),rod);
-        moveRod.setByX(-300 + Platforms.get(current_Platform).getWidth() - Platforms.get(current_Platform+1).getWidth());
+        moveRod.setByX(-rod.getHeight());
+
+        moveRod.setOnFinished(event -> {
+
+            System.out.println("hjfefe");
+            double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+
+            Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+            new_rod.setHeight(2);
+            new_rod.setX(new_player.getX()+85);
+            new_rod.setY(457);
+
+            rod = new_rod;
+
+            group1.getChildren().add(rod);
+
+            TransitionArray.clear();
+
+            for (int i = 0; i<Platforms.size() ; i++) {
+                TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                System.out.println("l1");
+                TransitionArray.add(moveTransition);
+                System.out.println("l2");
+            }
+
+            for (int i = 0; i<TransitionArray.size() ; i++){
+                TransitionArray.get(i).play();
+            }
+
+            TransitionArray.clear();
+
+            current_Platform ++ ;
+
+
+        });
         TransitionArray.add(moveRod);
         for (int i = 0; i<TransitionArray.size() ; i++){
             TransitionArray.get(i).play();
         }
 
+        System.out.println(new_player.getX());
 
 //        group1.getChildren().remove(rod);
+        rod_length = rod.getHeight();
 
-        Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
-        new_rod.setHeight(2);
-        new_rod.setX(95);
-        new_rod.setY(457);
 
-        rod = new_rod;
-
-        group1.getChildren().add(rod);
-        current_Platform ++ ;
 
     }
 
