@@ -500,42 +500,51 @@ public class HomePageController implements HomeInterface , Rod{
         moveRod.setByX(-rod.getHeight());
 
         moveRod.setOnFinished(event -> {
+            System.out.println("The rod lenght is : " + rod_length);
+            System.out.println("The width of the tower is :"+Platforms.get(current_Platform+1).getWidth());
+            if (rod_length < 300 - Platforms.get(current_Platform).getWidth() + 3 || rod_length > 300 + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
+                System.out.println("died");
+                new_player.player_fall();
 
-            System.out.println("hjfefe");
-            double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+            }
+            else{
+                System.out.println("hjfefe");
+                double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
 
-            Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
-            new_rod.setHeight(2);
-            new_rod.setX(new_player.getX()+85);
-            new_rod.setY(457);
+                Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+                new_rod.setHeight(2);
+                new_rod.setX(new_player.getX()+85);
+                new_rod.setY(457);
 
 
 
-            TransitionArray.clear();
+                TransitionArray.clear();
 
-            for (int i = 0; i<Platforms.size() ; i++) {
-                TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-                moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
-                System.out.println("l1");
-                TransitionArray.add(moveTransition);
-                System.out.println("l2");
+                for (int i = 0; i<Platforms.size() ; i++) {
+                    TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                    moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                    System.out.println("l1");
+                    TransitionArray.add(moveTransition);
+                    System.out.println("l2");
+                }
+
+                TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+                moveRod1.setByX(-newX);
+                TransitionArray.add(moveRod1);
+
+                for (int i = 0; i<TransitionArray.size() ; i++){
+                    TransitionArray.get(i).play();
+                }
+
+                TransitionArray.clear();
+
+                rod = new_rod;
+
+                group1.getChildren().add(rod);
+
+                current_Platform ++ ;
             }
 
-            TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
-            moveRod1.setByX(-newX);
-            TransitionArray.add(moveRod1);
-
-            for (int i = 0; i<TransitionArray.size() ; i++){
-                TransitionArray.get(i).play();
-            }
-
-            TransitionArray.clear();
-
-            rod = new_rod;
-
-            group1.getChildren().add(rod);
-
-            current_Platform ++ ;
 
 
         });

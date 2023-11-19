@@ -1,11 +1,13 @@
 package project;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class Player extends ImageView {
 
@@ -55,6 +57,14 @@ public class Player extends ImageView {
     //for serialization and get the saved state of the player
     public static void getPlayerState(){
 
+    }
+
+    public void player_fall(){
+        TranslateTransition playerFall = new TranslateTransition(Duration.millis(1000), this);
+        playerFall.setToY(500);
+        playerFall.setCycleCount(1);
+        playerFall.setAutoReverse(false);
+        playerFall.play();
     }
 
 }
