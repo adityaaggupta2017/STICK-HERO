@@ -388,6 +388,10 @@ public class HomePageController implements HomeInterface , Rod{
         System.out.println("5");
         ((Pane)newRoot).getChildren().add(group1) ;
 
+        if (StartApplication.getMediaPlayer() != null) {
+            StartApplication.getMediaPlayer().stop();
+        }
+
 
         String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
         Media media = new Media(new File(path).toURI().toString());
