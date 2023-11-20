@@ -8,7 +8,7 @@ public class Cherry extends ImageView {
 
 
     public Cherry(){
-        Image defaultImage = new Image("Cherry.png");
+        Image defaultImage = new Image("cherry_icon-removebg-preview.png");
         setImage(defaultImage);
 
         double newWidth = 40;
