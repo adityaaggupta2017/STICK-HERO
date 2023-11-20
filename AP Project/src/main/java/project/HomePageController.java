@@ -633,6 +633,19 @@ public class HomePageController implements HomeInterface , Rod{
         BoxBlur blur = new BoxBlur(3,3,3);
         scene.getRoot().setEffect(blur);
 
+
+        FadeTransition fadeInTransition = new FadeTransition(Duration.millis(1000), pauseMenuRoot);
+        fadeInTransition.setFromValue(0.0);
+        fadeInTransition.setToValue(1.0);
+
+        // Play the fade in transition
+        fadeInTransition.play();
+
+        // Show the pop-up
+
+        pauseMenuStage.setOnCloseRequest(Event::consume);
+        pauseMenuStage.initStyle(StageStyle.UNDECORATED); // this removes the close window button
+
         mediaPlayer.setVolume(0.2);
         pauseMenuStage.setScene(pauseMenuScene);
         pauseMenuStage.show();
