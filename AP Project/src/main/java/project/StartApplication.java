@@ -11,16 +11,27 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+
+
+
 public class StartApplication extends Application {
+
+    private static MediaPlayer mediaPlayer ;
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
 
     @Override
     public void start(Stage stage) throws IOException {
 
-        String path = "src\\main\\java\\project\\Main Menu.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
         Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("Home-Page.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 635, 800);

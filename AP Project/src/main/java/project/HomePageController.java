@@ -310,12 +310,6 @@ public class HomePageController implements HomeInterface , Rod{
     public void general_initializer() {
         Random random1 = new Random();
 
-        String path1 = "src\\main\\java\\project\\Main Menu.mp3";
-        Media media1 = new Media(new File(path1).toURI().toString());
-        MediaPlayer mediaPlayer1 = new MediaPlayer(media1);
-        mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE);
-        fadeIn(mediaPlayer1, 1.0);
-
         //Setting the background music for the main screen
 //        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
 //        Media media = new Media(new File(mediaPath).toURI().toString());
@@ -394,26 +388,42 @@ public class HomePageController implements HomeInterface , Rod{
         System.out.println("5");
         ((Pane)newRoot).getChildren().add(group1) ;
 
-        fadeOut(mediaPlayer1, 0.0);
-        String path2 = "src\\main\\java\\project\\Running game.mp3";
-        Media media2 = new Media(new File(path2).toURI().toString());
-        MediaPlayer mediaPlayer2 = new MediaPlayer(media2);
-        mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
-        fadeIn(mediaPlayer2, 0.5);
-    }
-    public static void fadeIn(MediaPlayer mediaPlayer, double d1) {
-        // Create a Timeline for fade-in effect
-        Timeline fadeInTimeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(mediaPlayer.volumeProperty(), d1)));
-        fadeInTimeline.play();
-    }
+        if (StartApplication.getMediaPlayer() != null) {
+            StartApplication.getMediaPlayer().stop();
+        }
 
 
-    public static void fadeOut(MediaPlayer mediaPlayer, double d1) {
-        // Create a Timeline for fade-out effect
-        Timeline fadeOutTimeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(mediaPlayer.volumeProperty(), d1)));
-        fadeOutTimeline.play();
-        if(d1 == 0.0) mediaPlayer.stop();
+        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setAutoPlay(true);
+
+
+
+
+
     }
+//    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
+//        // Create a Timeline for fade-in effect
+//        Timeline fadeInTimeline = new Timeline(
+//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+//        );
+//
+//        fadeInTimeline.play();
+//    }
+//
+//
+//    public static void fadeOut(DoubleProperty volumeProperty, double d1, double d2) {
+//        // Create a Timeline for fade-out effect
+//        Timeline fadeOutTimeline = new Timeline(
+//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
+//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
+//        );
+//
+//        fadeOutTimeline.play();
+//    }
 
 
     @FXML
@@ -494,42 +504,51 @@ public class HomePageController implements HomeInterface , Rod{
         moveRod.setByX(-rod.getHeight());
 
         moveRod.setOnFinished(event -> {
+            System.out.println("The rod lenght is : " + rod_length);
+            System.out.println("The width of the tower is :"+Platforms.get(current_Platform+1).getWidth());
+            if (rod_length < 300 - Platforms.get(current_Platform).getWidth() + 3 || rod_length > 300 + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
+                System.out.println("died");
+                new_player.player_fall();
 
-            System.out.println("hjfefe");
-            double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+            }
+            else{
+                System.out.println("hjfefe");
+                double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
 
-            Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
-            new_rod.setHeight(2);
-            new_rod.setX(new_player.getX()+85);
-            new_rod.setY(457);
+                Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+                new_rod.setHeight(2);
+                new_rod.setX(new_player.getX()+85);
+                new_rod.setY(457);
 
 
 
-            TransitionArray.clear();
+                TransitionArray.clear();
 
-            for (int i = 0; i<Platforms.size() ; i++) {
-                TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-                moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
-                System.out.println("l1");
-                TransitionArray.add(moveTransition);
-                System.out.println("l2");
+                for (int i = 0; i<Platforms.size() ; i++) {
+                    TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                    moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                    System.out.println("l1");
+                    TransitionArray.add(moveTransition);
+                    System.out.println("l2");
+                }
+
+                TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+                moveRod1.setByX(-newX);
+                TransitionArray.add(moveRod1);
+
+                for (int i = 0; i<TransitionArray.size() ; i++){
+                    TransitionArray.get(i).play();
+                }
+
+                TransitionArray.clear();
+
+                rod = new_rod;
+
+                group1.getChildren().add(rod);
+
+                current_Platform ++ ;
             }
 
-            TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
-            moveRod1.setByX(-newX);
-            TransitionArray.add(moveRod1);
-
-            for (int i = 0; i<TransitionArray.size() ; i++){
-                TransitionArray.get(i).play();
-            }
-
-            TransitionArray.clear();
-
-            rod = new_rod;
-
-            group1.getChildren().add(rod);
-
-            current_Platform ++ ;
 
 
         });

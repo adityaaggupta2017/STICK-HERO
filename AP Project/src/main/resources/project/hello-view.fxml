@@ -28,7 +28,7 @@
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Downloads/pause.png" />
+                  <Image url="@../pause.png" />
                </image>
             </ImageView>
          </graphic>
@@ -53,15 +53,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Button layoutX="-11.0" layoutY="-30.0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 30; -fx-border-color: BLACK; -fx-border-width: 3; -fx-border-radius: 30;">
-               <graphic>
-                  <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" style="fx-background-radius: 30;">
-                     <image>
-                        <Image url="@../../../../../../../../../Downloads/cherry_icon-removebg-preview.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Button layoutX="-11.0" layoutY="-30.0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 30; -fx-border-color: BLACK; -fx-border-width: 3; -fx-border-radius: 30;" />
          </children>
       </Group>
    </children>
