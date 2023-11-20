@@ -34,4 +34,5 @@ public class CharacterController implements Initializable {
 
     }
 
+
 }

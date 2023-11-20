@@ -1,5 +1,7 @@
 package project;
 
+import java.util.Map;
+
 public class PauseMenu {
     private int currentScore;
 
@@ -23,6 +25,8 @@ public class PauseMenu {
         this.currentPlayer = currentPlayer;
     }
 
+    public static void main(String[] args) {
 
+    }
 
 }

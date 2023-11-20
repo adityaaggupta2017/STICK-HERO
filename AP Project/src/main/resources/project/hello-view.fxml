@@ -24,7 +24,7 @@
             <Image url="@../hero.png" />
          </image>
       </ImageView>
-      <Button layoutX="14.0" layoutY="20.0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 30;">
+      <Button layoutX="14.0" layoutY="20.0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#PauseMenu" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 30;">
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>

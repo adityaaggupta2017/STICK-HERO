@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -108,10 +109,10 @@ public class HomePageController implements HomeInterface , Rod{
     private static MediaPlayer mediaPlayer1;
     private static MediaPlayer mediaPlayer2;
 
-    private static MediaPlayer mediaPlayer;
+
 
     private static String mediaPath;
-    private static Media media;
+
     static FadeTransition fadeOutSound1;
     static FadeTransition fadeOutSound2;
     static FadeTransition fadeInSound1;
@@ -120,10 +121,26 @@ public class HomePageController implements HomeInterface , Rod{
     static DoubleProperty volumeProperty2;
 
 
+    private static Media media;
+
+    private static MediaPlayer mediaPlayer;
+
+    private static Stage pauseMenuStage;
+
+
     @FXML
     protected void onHelloButtonClick() {
 //        ButtonText.setText("Welcome to JavaFX Application!");
         System.out.println("helloworld");
+    }
+
+    // these are the getter setter for the Stage
+    public static Stage getStage() {
+        return stage;
+    }
+
+    public static void setStage(Stage stage) {
+        HomePageController.stage = stage;
     }
 
     public static Stage getStored_stage() {
@@ -150,6 +167,33 @@ public class HomePageController implements HomeInterface , Rod{
         this.scene = scene;
     }
 
+
+
+    // these are the getter setter for the media
+    public static Media getMedia() {
+        return media;
+    }
+
+    public static void setMedia(Media media) {
+        HomePageController.media = media;
+    }
+    // these are the getter setter for the mediaPlayer
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+        HomePageController.mediaPlayer = mediaPlayer;
+    }
+
+    // these are the getter setter for the PauseMenuStage
+    public static Stage getPauseMenuStage() {
+        return pauseMenuStage;
+    }
+
+    public static void setPauseMenuStage(Stage pauseMenuStage) {
+        HomePageController.pauseMenuStage = pauseMenuStage;
+    }
 
     @FXML
     public void switchToRunning(ActionEvent event1) throws IOException {
@@ -392,10 +436,12 @@ public class HomePageController implements HomeInterface , Rod{
             StartApplication.getMediaPlayer().stop();
         }
 
-
+        if (PauseMenuController.getNewMediaPlayer() !=null){
+            PauseMenuController.getNewMediaPlayer().stop();
+        }
         String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
 
@@ -567,6 +613,29 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     public void playMoveTransition(){
+
+    }
+
+
+    public void PauseMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Pause-Screen.fxml"));
+        Parent pauseMenuRoot = loader.load();
+
+        pauseMenuStage = new Stage();
+        pauseMenuStage.initModality(Modality.APPLICATION_MODAL);
+        pauseMenuStage.initOwner(stage);
+        Scene pauseMenuScene = new Scene(pauseMenuRoot);
+        Image icon = new Image("stickhero_charcater-removebg-preview.png") ;
+        pauseMenuStage.getIcons().add(icon);
+        pauseMenuStage.setWidth(400);
+        pauseMenuStage.setHeight(300);
+        pauseMenuStage.setResizable(false);
+        BoxBlur blur = new BoxBlur(3,3,3);
+        scene.getRoot().setEffect(blur);
+
+        mediaPlayer.setVolume(0.2);
+        pauseMenuStage.setScene(pauseMenuScene);
+        pauseMenuStage.show();
 
     }
 }
