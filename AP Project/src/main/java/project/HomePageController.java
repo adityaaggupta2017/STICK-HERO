@@ -310,6 +310,12 @@ public class HomePageController implements HomeInterface , Rod{
     public void general_initializer() {
         Random random1 = new Random();
 
+        String path1 = "src\\main\\java\\project\\Main Menu.mp3";
+        Media media1 = new Media(new File(path1).toURI().toString());
+        MediaPlayer mediaPlayer1 = new MediaPlayer(media1);
+        mediaPlayer1.setCycleCount(MediaPlayer.INDEFINITE);
+        fadeIn(mediaPlayer1, 1.0);
+
         //Setting the background music for the main screen
 //        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
 //        Media media = new Media(new File(mediaPath).toURI().toString());
@@ -388,38 +394,26 @@ public class HomePageController implements HomeInterface , Rod{
         System.out.println("5");
         ((Pane)newRoot).getChildren().add(group1) ;
 
-
-        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setAutoPlay(true);
-
-
-
-
-
+        fadeOut(mediaPlayer1, 0.0);
+        String path2 = "src\\main\\java\\project\\Running game.mp3";
+        Media media2 = new Media(new File(path2).toURI().toString());
+        MediaPlayer mediaPlayer2 = new MediaPlayer(media2);
+        mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
+        fadeIn(mediaPlayer2, 0.5);
     }
-//    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
-//        // Create a Timeline for fade-in effect
-//        Timeline fadeInTimeline = new Timeline(
-//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
-//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
-//        );
-//
-//        fadeInTimeline.play();
-//    }
-//
-//
-//    public static void fadeOut(DoubleProperty volumeProperty, double d1, double d2) {
-//        // Create a Timeline for fade-out effect
-//        Timeline fadeOutTimeline = new Timeline(
-//                new KeyFrame(Duration.seconds(0), new KeyValue(volumeProperty, d1)),
-//                new KeyFrame(Duration.seconds(3), new KeyValue(volumeProperty, d2))
-//        );
-//
-//        fadeOutTimeline.play();
-//    }
+    public static void fadeIn(MediaPlayer mediaPlayer, double d1) {
+        // Create a Timeline for fade-in effect
+        Timeline fadeInTimeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(mediaPlayer.volumeProperty(), d1)));
+        fadeInTimeline.play();
+    }
+
+
+    public static void fadeOut(MediaPlayer mediaPlayer, double d1) {
+        // Create a Timeline for fade-out effect
+        Timeline fadeOutTimeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(mediaPlayer.volumeProperty(), d1)));
+        fadeOutTimeline.play();
+        if(d1 == 0.0) mediaPlayer.stop();
+    }
 
 
     @FXML
