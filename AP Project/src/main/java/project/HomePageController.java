@@ -641,6 +641,8 @@ public class HomePageController implements HomeInterface , Rod{
         // Play the fade in transition
         fadeInTransition.play();
 
+
+
         // Show the pop-up
 
         pauseMenuStage.setOnCloseRequest(Event::consume);
