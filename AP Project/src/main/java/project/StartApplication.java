@@ -26,7 +26,7 @@ public class StartApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
+        String path = "src\\main\\java\\project\\Main Menu.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

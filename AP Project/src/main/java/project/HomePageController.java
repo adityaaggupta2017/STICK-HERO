@@ -393,7 +393,7 @@ public class HomePageController implements HomeInterface , Rod{
         }
 
 
-        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        String path = "src\\main\\java\\project\\Running game.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
