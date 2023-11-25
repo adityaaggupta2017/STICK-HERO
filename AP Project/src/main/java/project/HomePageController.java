@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -494,7 +495,7 @@ public class HomePageController implements HomeInterface , Rod{
         if (PauseMenuController.getNewMediaPlayer() !=null){
             PauseMenuController.getNewMediaPlayer().stop();
         }
-        String path = "src\\main\\java\\project\\background_song.mp3";
+        String path = "src\\main\\java\\project\\Running game.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -603,7 +604,21 @@ public class HomePageController implements HomeInterface , Rod{
 
         moveRod.setOnFinished(event -> {
 
+            double d1 = Math.random();
+            if(d1 >= 0.5){
+                ImageView cherryImage = new_player.getPlayerCherryProperties().getCherryImage();
 
+
+                // Position the cherry between the platforms
+                double min = (Platforms.get(current_Platform + 1).getX() + Platforms.get(current_Platform+1).getWidth());
+                double max = (Platforms.get(current_Platform + 2).getX());
+                cherryImage.setX((min + (max-min)*Math.random())); //Adjust the horizontal position of the cherry
+                cherryImage.setY(480); //Adjust the vertical position of the cherry
+
+
+                // Add the cherry ImageView to the scene
+                group1.getChildren().add(cherryImage);
+            }
             new_player.setCurrent_pillar(Platforms.get(current_Platform));
             new_player.setNext_pillar(Platforms.get(current_Platform+1));
             System.out.println("The rod lenght is : " + rod_length);
@@ -647,7 +662,6 @@ public class HomePageController implements HomeInterface , Rod{
                     new_rod.setHeight(2);
                     new_rod.setX(new_player.getX()+85);
                     new_rod.setY(457);
-
 
 
                     TransitionArray.clear();
