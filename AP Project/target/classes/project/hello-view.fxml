@@ -36,7 +36,7 @@
       <StackPane layoutX="195.0" layoutY="80.0" prefHeight="60.0" prefWidth="100.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e49775" height="71.0" opacity="0.16" stroke="#170101" strokeType="INSIDE" strokeWidth="100.0" width="110.0" />
-            <Text fill="#141313" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+            <Text fx:id="dynamicText" fill="#141313" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
