@@ -18,7 +18,7 @@ public class Player extends ImageView implements Serializable {
     private static final long serialVersionUID = 5L;
 
     private int player_down_state ;
-//    private transient CharacterController controls;
+    //    private transient CharacterController controls;
     private Cherry playerCherryProperties;
     private int player_points;
 
@@ -116,6 +116,11 @@ public class Player extends ImageView implements Serializable {
         playerFall.setCycleCount(1);
         playerFall.setAutoReverse(false);
         playerFall.play();
+
+        // now for the exit screen
+
+
+
     }
 
     public void flip_player() {
