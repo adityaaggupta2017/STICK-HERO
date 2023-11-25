@@ -136,6 +136,10 @@ public class HomePageController implements HomeInterface , Rod{
 
     private static Stage endingSceneStage ;
 
+    private static ArrayList<Cherry> cherry_array;
+
+    private static int CherryGetter = 0;
+
     public static Stage getEndingSceneStage() {
         return endingSceneStage;
     }
@@ -401,7 +405,7 @@ public class HomePageController implements HomeInterface , Rod{
     public void general_initializer() {
         System.out.println("--------------------------------------------");
         Random random1 = new Random();
-
+        cherry_array = new ArrayList<Cherry>();
         //Setting the background music for the main screen
 //        String mediaPath = "Main Menu.mp3"; // Replace with the actual path to your audio file
 //        Media media = new Media(new File(mediaPath).toURI().toString());
@@ -434,7 +438,10 @@ public class HomePageController implements HomeInterface , Rod{
 //        pillarGenerator(initialFlag);
 //        pillarGenerator(initialFlag);
         for (int i = 0; i < 1000; i++) {
+
+            CherryGetter = random1.nextInt(3);
             Rectangle rectangle ;
+            Cherry new_cherry = null ;
 
             if (i == 0){
                 rectangle = new Rectangle(100, 200, Color.BLACK);
@@ -443,14 +450,28 @@ public class HomePageController implements HomeInterface , Rod{
                 int x = 50 + random1.nextInt(50);
                 System.out.println(x);
                 rectangle = new Rectangle(x, 200, Color.BLACK); // Modify size/color as needed
+
             }
             if (i != 0) {
+                if (CherryGetter == 2){
+
+                    new_cherry = new Cherry() ;
+                    new_cherry.setX(i*300 - 50);
+                    new_cherry.setY(469);
+
+                }
+
                 rectangle.setX(i * 300 + random1.nextInt(200)); // Set X position based on the loop index
             }
             else{
                 rectangle.setX(0);
             }
             rectangle.setY(459); // Set Y position
+
+            if (new_cherry != null){
+                cherry_array.add(new_cherry);
+                group1.getChildren().add(new_cherry);
+            }
 
             Platforms.add(rectangle);
             group1.getChildren().add(rectangle);
@@ -593,6 +614,12 @@ public class HomePageController implements HomeInterface , Rod{
             System.out.println("l2");
         }
 
+        for (int i = 0; i<cherry_array.size() ; i++){
+            TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , cherry_array.get(i));
+            moveTransition.setByX(-rod.getHeight());
+            TransitionArray.add(moveTransition);
+        }
+
 
 //        TranslateTransition movePlayer = new TranslateTransition(Duration.millis(500) , new_player);
 //        System.out.println(new_player.getX());
@@ -661,6 +688,12 @@ public class HomePageController implements HomeInterface , Rod{
                         System.out.println("l1");
                         TransitionArray.add(moveTransition);
                         System.out.println("l2");
+                    }
+
+                    for (int i = 0 ; i <cherry_array.size() ;i++){
+                        TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , cherry_array.get(i));
+                        moveTransition.setByX(-newX);
+                        TransitionArray.add(moveTransition);
                     }
 
                     TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
