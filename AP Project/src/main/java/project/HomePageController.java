@@ -134,6 +134,16 @@ public class HomePageController implements HomeInterface , Rod{
     @FXML
     private Text dynamicText ;
 
+    private static Stage endingSceneStage ;
+
+    public static Stage getEndingSceneStage() {
+        return endingSceneStage;
+    }
+
+    public static void setEndingSceneStage(Stage endingSceneStage) {
+        HomePageController.endingSceneStage = endingSceneStage;
+    }
+
     public Text getDynamicText() {
         return dynamicText;
     }
@@ -213,6 +223,9 @@ public class HomePageController implements HomeInterface , Rod{
     public void switchToRunning(ActionEvent event1) throws IOException {
         // Load the new FXML file
 //        fadeOut(volumeProperty1,1.0,0.0);
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+        }
 
         newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
         System.out.println("hello2");
@@ -386,6 +399,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     @FXML
     public void general_initializer() {
+        System.out.println("--------------------------------------------");
         Random random1 = new Random();
 
         //Setting the background music for the main screen
@@ -600,12 +614,22 @@ public class HomePageController implements HomeInterface , Rod{
             if (rod_length < Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() - Platforms.get(current_Platform).getWidth() + 3 || rod_length > Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
                 System.out.println("died");
                 new_player.player_fall();
+                try {
+                    Ending_Scene();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
             else{
                 if (new_player.getPlayer_down_state() == 1){
                     System.out.println("died");
                     new_player.player_fall();
+                    try {
+                        Ending_Scene();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 else{
 
@@ -718,4 +742,49 @@ public class HomePageController implements HomeInterface , Rod{
         pauseMenuStage.show();
 
     }
+
+    public void Ending_Scene() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ending_screen.fxml"));
+        Parent EndingSceneRoot = loader.load();
+        endingSceneStage = new Stage();
+        endingSceneStage.initModality(Modality.APPLICATION_MODAL);
+        endingSceneStage.initOwner(stage);
+        Scene endingScene = new Scene(EndingSceneRoot);
+        Image icon = new Image("stickhero_charcater-removebg-preview.png") ;
+        endingSceneStage.getIcons().add(icon);
+
+
+        endingSceneStage.setWidth(500);
+        endingSceneStage.setHeight(800);
+        endingSceneStage.setResizable(false);
+        BoxBlur blur = new BoxBlur(3,3,3);
+//        scene.getRoot().setEffect(blur);
+
+
+        FadeTransition fadeInTransition = new FadeTransition(Duration.millis(1000), EndingSceneRoot);
+        fadeInTransition.setFromValue(0.0);
+        fadeInTransition.setToValue(1.0);
+
+        // Play the fade in transition
+        fadeInTransition.play();
+
+
+
+        // Show the pop-up
+
+        endingSceneStage.setOnCloseRequest(Event::consume);
+        endingSceneStage.initStyle(StageStyle.UNDECORATED); // this removes the close window button
+
+        mediaPlayer.setVolume(0.1);
+        endingSceneStage.setScene(endingScene);
+        endingSceneStage.show();
+
+
+
+
+
+    }
+
+
+
 }

@@ -119,6 +119,8 @@ public class Player extends ImageView implements Serializable {
 
         // now for the exit screen
 
+
+
     }
 
     public void flip_player() {
