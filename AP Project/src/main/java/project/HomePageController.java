@@ -14,11 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Modality;
@@ -127,6 +129,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     private static Stage pauseMenuStage;
 
+    private static int rotation_counter ;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -222,8 +225,28 @@ public class HomePageController implements HomeInterface , Rod{
 
         // Set the scene with a transparent root first
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
+
+        scene.setOnKeyPressed(event->{
+            if (event.getCode() == KeyCode.S){
+                if (rotation_counter % 2 == 0){
+                    new_player.flip_player();
+                    new_player.setPlayer_down_state(1);
+
+                }
+                else{
+                    new_player.normal_state();
+                    new_player.setPlayer_down_state(0);
+                }
+                rotation_counter++ ;
+
+            }
+        });
+
+
+
         stage.setScene(scene);
         stage.setResizable(false);
+
         System.out.println("hello1");
 
         // Set up the fade transition for the current scene
@@ -380,7 +403,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         Platforms = new ArrayList<Rectangle>();
 
-
+        rotation_counter = 0;
 //
 //        pillarGenerator(initialFlag);
 //        pillarGenerator(initialFlag);
@@ -395,8 +418,12 @@ public class HomePageController implements HomeInterface , Rod{
                 System.out.println(x);
                 rectangle = new Rectangle(x, 200, Color.BLACK); // Modify size/color as needed
             }
-
-            rectangle.setX(i * 300); // Set X position based on the loop index
+            if (i != 0) {
+                rectangle.setX(i * 300 + random1.nextInt(200)); // Set X position based on the loop index
+            }
+            else{
+                rectangle.setX(0);
+            }
             rectangle.setY(459); // Set Y position
 
             Platforms.add(rectangle);
@@ -531,6 +558,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     public void movePlatforms(){
 
+
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
             moveTransition.setByX(-rod.getHeight()); // Adjust the movement speed of rectangles
@@ -546,63 +574,77 @@ public class HomePageController implements HomeInterface , Rod{
 //
 //        TransitionArray.add(movePlayer);
 
+
         TranslateTransition moveRod = new TranslateTransition(Duration.millis(500),rod);
         moveRod.setByX(-rod.getHeight());
 
         moveRod.setOnFinished(event -> {
+
+            new_player.setCurrent_pillar(Platforms.get(current_Platform));
+            new_player.setNext_pillar(Platforms.get(current_Platform+1));
             System.out.println("The rod lenght is : " + rod_length);
             System.out.println("The width of the tower is :"+Platforms.get(current_Platform+1).getWidth());
-            if (rod_length < 300 - Platforms.get(current_Platform).getWidth() + 3 || rod_length > 300 + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
+            if (rod_length < Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() - Platforms.get(current_Platform).getWidth() + 3 || rod_length > Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
                 System.out.println("died");
                 new_player.player_fall();
 
             }
             else{
-                System.out.println("hjfefe");
-                double newX = 300 + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+                if (new_player.getPlayer_down_state() == 1){
+                    System.out.println("died");
+                    new_player.player_fall();
+                }
+                else{
 
-                Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
-                new_rod.setHeight(2);
-                new_rod.setX(new_player.getX()+85);
-                new_rod.setY(457);
+                    System.out.println("hjfefe");
+                    double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+
+                    Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+                    new_rod.setHeight(2);
+                    new_rod.setX(new_player.getX()+85);
+                    new_rod.setY(457);
 
 
 
-                TransitionArray.clear();
+                    TransitionArray.clear();
 
-                for (int i = 0; i<Platforms.size() ; i++) {
-                    TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-                    moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
-                    System.out.println("l1");
-                    TransitionArray.add(moveTransition);
-                    System.out.println("l2");
+                    for (int i = 0; i<Platforms.size() ; i++) {
+                        TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                        moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                        System.out.println("l1");
+                        TransitionArray.add(moveTransition);
+                        System.out.println("l2");
+                    }
+
+                    TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+                    moveRod1.setByX(-newX);
+                    TransitionArray.add(moveRod1);
+
+                    for (int i = 0; i<TransitionArray.size() ; i++){
+                        TransitionArray.get(i).play();
+                    }
+
+                    TransitionArray.clear();
+
+                    rod = new_rod;
+
+                    group1.getChildren().add(rod);
+
+                    current_Platform ++ ;
+
                 }
 
-                TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
-                moveRod1.setByX(-newX);
-                TransitionArray.add(moveRod1);
 
-                for (int i = 0; i<TransitionArray.size() ; i++){
-                    TransitionArray.get(i).play();
-                }
-
-                TransitionArray.clear();
-
-                rod = new_rod;
-
-                group1.getChildren().add(rod);
-
-                current_Platform ++ ;
             }
 
 
 
         });
+
         TransitionArray.add(moveRod);
         for (int i = 0; i<TransitionArray.size() ; i++){
             TransitionArray.get(i).play();
         }
-
         System.out.println(new_player.getX());
 
 //        group1.getChildren().remove(rod);

@@ -1,5 +1,6 @@
 package project;
 
+import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,13 +12,42 @@ import javafx.util.Duration;
 
 public class Player extends ImageView {
 
+    private int player_down_state ;
     private CharacterController controls;
     private Cherry playerCherryProperties;
     private int player_points;
 
     private static MediaPlayer mediaPlayer;
+
+    private static Rectangle current_pillar ;
+    private static Rectangle next_pillar ;
+
+    public int getPlayer_down_state() {
+        return player_down_state;
+    }
+
+    public void setPlayer_down_state(int player_down_state) {
+        this.player_down_state = player_down_state;
+    }
+
     public Cherry getPlayerCherryProperties() {
         return playerCherryProperties;
+    }
+
+    public Rectangle getCurrent_pillar() {
+        return current_pillar;
+    }
+
+    public Rectangle getNext_pillar() {
+        return next_pillar;
+    }
+
+    public void setCurrent_pillar(Rectangle current_pillar) {
+        Player.current_pillar = current_pillar;
+    }
+
+    public void setNext_pillar(Rectangle next_pillar) {
+        Player.next_pillar = next_pillar;
     }
 
     public void setPlayerCherryProperties(Cherry playerCherryProperties) {
@@ -35,7 +65,7 @@ public class Player extends ImageView {
     public Player() {
         super();
         playerCherryProperties = new Cherry();
-
+        this.player_down_state = 0;
         // Set the default image for the player
         Image defaultImage = new Image("hero.png");
         setImage(defaultImage);
@@ -66,6 +96,17 @@ public class Player extends ImageView {
         playerFall.setAutoReverse(false);
         playerFall.play();
     }
+
+    public void flip_player() {
+        this.setY(456);
+        this.setScaleY(-1); // Flip vertically
+    }
+
+    public void normal_state(){
+        this.setY(385);
+        this.setScaleY(1);
+    }
+
 
 }
 
