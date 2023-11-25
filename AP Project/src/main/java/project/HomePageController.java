@@ -580,6 +580,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         moveRod.setOnFinished(event -> {
 
+
             new_player.setCurrent_pillar(Platforms.get(current_Platform));
             new_player.setNext_pillar(Platforms.get(current_Platform+1));
             System.out.println("The rod lenght is : " + rod_length);
