@@ -35,7 +35,7 @@ public class PauseMenuController extends HomePageController{
 //        stage.setScene(scene);
 ////        System.out.println("hello");
 //        stage.show();
-        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
+        String path = "src\\main\\java\\project\\Main Menu.mp3";
         new_media = new Media(new File(path).toURI().toString());
         new_media_player = new MediaPlayer(new_media);
         new_media_player.setCycleCount(MediaPlayer.INDEFINITE);

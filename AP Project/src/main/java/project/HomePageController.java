@@ -439,7 +439,7 @@ public class HomePageController implements HomeInterface , Rod{
         if (PauseMenuController.getNewMediaPlayer() !=null){
             PauseMenuController.getNewMediaPlayer().stop();
         }
-        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        String path = "src\\main\\java\\project\\background_song.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
