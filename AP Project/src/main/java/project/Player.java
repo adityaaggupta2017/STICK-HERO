@@ -10,14 +10,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class Player extends ImageView {
+import java.io.*;
+
+public class Player extends ImageView implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 5L;
 
     private int player_down_state ;
-    private CharacterController controls;
+    //    private transient CharacterController controls;
     private Cherry playerCherryProperties;
     private int player_points;
 
-    private static MediaPlayer mediaPlayer;
+//    private static MediaPlayer mediaPlayer;
 
     private static Rectangle current_pillar ;
     private static Rectangle next_pillar ;
@@ -80,13 +85,29 @@ public class Player extends ImageView {
 
     }
 
-    public static void savePlayerState(){
-
+    public static void savePlayerState(Player s1) throws IOException {
+        ObjectOutputStream out = null;
+        try{
+            out = new ObjectOutputStream(new FileOutputStream("PlayerState.txt",false));
+            out.writeObject(s1);
+        }
+        finally{
+            if(out != null) out.close();
+        }
     }
 
     //for serialization and get the saved state of the player
-    public static void getPlayerState(){
-
+    public static Player getPlayerState() throws IOException, ClassNotFoundException{
+        Player p1 = null;
+        ObjectInputStream in = null;
+        try{
+            in = new ObjectInputStream(new FileInputStream("PlayerState.txt"));
+            p1 = (Player) in.readObject();
+        }
+        finally{
+            if(in != null) in.close();
+        }
+        return p1;
     }
 
     public void player_fall(){
@@ -95,6 +116,9 @@ public class Player extends ImageView {
         playerFall.setCycleCount(1);
         playerFall.setAutoReverse(false);
         playerFall.play();
+
+        // now for the exit screen
+
     }
 
     public void flip_player() {
