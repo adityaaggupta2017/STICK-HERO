@@ -132,6 +132,17 @@ public class HomePageController implements HomeInterface , Rod{
     private static int rotation_counter ;
 
     @FXML
+    private Text dynamicText ;
+
+    public Text getDynamicText() {
+        return dynamicText;
+    }
+
+    public void setDynamicText(int dynamicText) {
+        getDynamicText().setText(Integer.toString(dynamicText));
+    }
+
+    @FXML
     protected void onHelloButtonClick() {
 //        ButtonText.setText("Welcome to JavaFX Application!");
         System.out.println("helloworld");
@@ -404,6 +415,7 @@ public class HomePageController implements HomeInterface , Rod{
         Platforms = new ArrayList<Rectangle>();
 
         rotation_counter = 0;
+
 //
 //        pillarGenerator(initialFlag);
 //        pillarGenerator(initialFlag);
@@ -597,6 +609,16 @@ public class HomePageController implements HomeInterface , Rod{
                 }
                 else{
 
+                    String text = dynamicText.getText();
+                    int x = 0;
+                    try{
+                        x = Integer.parseInt(text);
+                    }
+                    catch (NumberFormatException e){
+                        e.printStackTrace();
+                    }
+
+                    setDynamicText(x+1);
                     System.out.println("hjfefe");
                     double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
 
