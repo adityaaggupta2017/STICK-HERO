@@ -22,7 +22,7 @@ public class EndingScreenController extends HomePageController{
 
     @FXML
     public void returnToHomePage() throws IOException {
-        String path = "src\\main\\java\\project\\Main Menu.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
         new_media = new Media(new File(path).toURI().toString());
         new_media_player = new MediaPlayer(new_media);
         new_media_player.setCycleCount(MediaPlayer.INDEFINITE);
