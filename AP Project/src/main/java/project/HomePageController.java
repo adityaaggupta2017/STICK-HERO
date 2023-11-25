@@ -295,6 +295,8 @@ public class HomePageController implements HomeInterface , Rod{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.initOwner(stage); // Set the main window as the owner
+        popupStage.setOnCloseRequest(Event::consume);
+        popupStage.initStyle(StageStyle.UNDECORATED);
 
         // Set up the scene with the loaded FXML content
         Scene popupScene = new Scene(newRoot);
@@ -471,11 +473,6 @@ public class HomePageController implements HomeInterface , Rod{
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
-
-
-
-
-
     }
 //    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
 //        // Create a Timeline for fade-in effect
@@ -690,6 +687,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         pauseMenuStage.setOnCloseRequest(Event::consume);
         pauseMenuStage.initStyle(StageStyle.UNDECORATED); // this removes the close window button
+        pauseMenuStage.initModality(Modality.APPLICATION_MODAL);
 
         mediaPlayer.setVolume(0.2);
         pauseMenuStage.setScene(pauseMenuScene);
