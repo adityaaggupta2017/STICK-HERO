@@ -27,6 +27,16 @@ public class Player extends ImageView implements Serializable {
     private static Rectangle current_pillar ;
     private static Rectangle next_pillar ;
 
+    private double x_coordinate = 0 ;
+
+    public double getX_coordinate() {
+        return x_coordinate;
+    }
+
+    public void setX_coordinate(double x_coordinate) {
+        this.x_coordinate = x_coordinate;
+    }
+
     public int getPlayer_down_state() {
         return player_down_state;
     }

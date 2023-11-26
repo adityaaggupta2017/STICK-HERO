@@ -1,6 +1,7 @@
 package project;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -140,6 +141,12 @@ public class HomePageController implements HomeInterface , Rod{
 
     private static int CherryGetter = 0;
 
+    @FXML
+    private Text dynamicCherryText ;
+
+    private int came_behind ;
+
+
     public static Stage getEndingSceneStage() {
         return endingSceneStage;
     }
@@ -154,6 +161,14 @@ public class HomePageController implements HomeInterface , Rod{
 
     public void setDynamicText(int dynamicText) {
         getDynamicText().setText(Integer.toString(dynamicText));
+    }
+
+    public Text getDynamicCherryText() {
+        return dynamicCherryText;
+    }
+
+    public void setDynamicCherryText(int dynamicCherryText) {
+        getDynamicCherryText().setText(Integer.toString(dynamicCherryText));
     }
 
     @FXML
@@ -423,6 +438,7 @@ public class HomePageController implements HomeInterface , Rod{
         rod = new Rectangle(5, 100, Color.BLACK) ;
 
         new_player = new Player();
+        new_player.setX_coordinate(new_player.getX());
 
         new_PauseMenu = new PauseMenu(new_player);
 
@@ -595,17 +611,46 @@ public class HomePageController implements HomeInterface , Rod{
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 
         Timeline timeline = new Timeline(keyFrame);
-        timeline.setOnFinished(e->movePlatforms());
+        timeline.setOnFinished(e->movePlayer());
 
         timeline.play();
 
 
     }
 
+    Runnable cherryCollection = () -> {
+
+        for (Cherry cherry: cherry_array){
+            if (new_player.getBoundsInParent().intersects(cherry.getBoundsInParent())){
+                group1.getChildren().remove(cherry);
+                cherry_array.remove(cherry);
+                increaseCherryCount();
+            }
+        }
+    };
+
+    Runnable playerMovement = () -> {
+        TranslateTransition movePlayerForward = new TranslateTransition(Duration.millis(1000), new_player);
+        movePlayerForward.setByX(rod.getHeight()); // Adjust the distance the player moves forward
+
+        movePlayerForward.setOnFinished(event -> movePlatforms());
+        movePlayerForward.play();
+    };
+    public void movePlayer() {
+        Thread playerForward = new Thread(playerMovement);
+        Thread cherryThread = new Thread(cherryCollection);
+
+        playerForward.start();
+        cherryThread.start();
+    }
+
+
 
     public void movePlatforms(){
 
-
+        TranslateTransition movePlayerBackwards = new TranslateTransition(Duration.millis(500), new_player);
+        movePlayerBackwards.setByX(-rod.getHeight());
+        TransitionArray.add(movePlayerBackwards);
         for (int i = 0; i<Platforms.size() ; i++) {
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
             moveTransition.setByX(-rod.getHeight()); // Adjust the movement speed of rectangles
@@ -618,6 +663,8 @@ public class HomePageController implements HomeInterface , Rod{
             TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , cherry_array.get(i));
             moveTransition.setByX(-rod.getHeight());
             TransitionArray.add(moveTransition);
+
+
         }
 
 
@@ -660,6 +707,24 @@ public class HomePageController implements HomeInterface , Rod{
                 }
                 else{
 
+                    double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+                    came_behind += (rod_length+ newX);
+
+                    System.out.println("This is the x coordinate the player: " + new_player.getX());
+                    System.out.println("This is the value of came_behind: " + came_behind);
+                    for (int i = 0 ; i< cherry_array.size() ; i++){
+                        System.out.println("this is the cherry - " +i+ "x coordinates "+cherry_array.get(i).getX());
+
+                    }
+
+                    for (int i = 0 ; i< cherry_array.size() ;i++){
+                        if ((cherry_array.get(i).getX() - came_behind) <= new_player.getX()){
+                            group1.getChildren().remove(cherry_array.get(i));
+                            cherry_array.remove(cherry_array.get(i));
+                            increaseCherryCount();
+                        }
+                    }
+
                     String text = dynamicText.getText();
                     int x = 0;
                     try{
@@ -670,8 +735,10 @@ public class HomePageController implements HomeInterface , Rod{
                     }
 
                     setDynamicText(x+1);
+
+
                     System.out.println("hjfefe");
-                    double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
+
 
                     Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
                     new_rod.setHeight(2);
@@ -740,6 +807,7 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     public void PauseMenu() throws IOException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Pause-Screen.fxml"));
         Parent pauseMenuRoot = loader.load();
 
@@ -817,6 +885,22 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     }
+
+    public void increaseCherryCount(){
+        String text = dynamicCherryText.getText();
+        int x = 0;
+        try{
+            x = Integer.parseInt(text);
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+        setDynamicCherryText(x+1);
+
+    }
+
+
 
 
 

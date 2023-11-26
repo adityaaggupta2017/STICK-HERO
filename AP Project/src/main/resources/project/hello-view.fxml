@@ -48,7 +48,7 @@
          <children>
             <Circle fill="DODGERBLUE" opacity="0.0" radius="42.0" stroke="BLACK" strokeType="INSIDE" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e49775" height="37.0" layoutY="-22.0" opacity="0.16" stroke="#170101" strokeType="INSIDE" strokeWidth="100.0" width="116.0" />
-            <Text fill="#141313" layoutX="65.0" layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="11">
+            <Text fx:id="dynamicCherryText" fill="#141313" layoutX="65.0" layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
