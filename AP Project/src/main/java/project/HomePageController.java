@@ -161,6 +161,13 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     public void setDynamicText(int dynamicText) {
+
+        String path_score = "AP Project\\src\\main\\java\\project\\InGameSounds\\score.mp3";
+        Media media_score = new Media(new File(path_score).toURI().toString());
+        MediaPlayer mediaPlayer_score = new MediaPlayer(media_score);
+
+        mediaPlayer_score.play();
+
         getDynamicText().setText(Integer.toString(dynamicText));
     }
 
@@ -530,12 +537,12 @@ public class HomePageController implements HomeInterface , Rod{
         if (PauseMenuController.getNewMediaPlayer() !=null){
             PauseMenuController.getNewMediaPlayer().stop();
         }
-        String path = "AP Project\\src\\main\\java\\project\\background_song.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\background_music_new.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(0.4);
 
 
 
@@ -698,7 +705,7 @@ public class HomePageController implements HomeInterface , Rod{
             new_player.setNext_pillar(Platforms.get(current_Platform+1));
             System.out.println("The rod lenght is : " + rod_length);
             System.out.println("The width of the tower is :"+Platforms.get(current_Platform+1).getWidth());
-            if (rod_length < Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() - Platforms.get(current_Platform).getWidth() + 3 || rod_length > Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
+            if (rod_length < Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() - Platforms.get(current_Platform).getWidth() +5  || rod_length > Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform+1).getWidth() - Platforms.get(current_Platform).getWidth()){
                 System.out.println("died");
                 new_player.player_fall();
                 try {
@@ -721,10 +728,10 @@ public class HomePageController implements HomeInterface , Rod{
                 else{
 
                     double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
-                    came_behind += (rod_length+ newX);
+
 
                     System.out.println("This is the x coordinate the player: " + new_player.getX());
-                    System.out.println("This is the value of came_behind: " + came_behind);
+
                     for (int i = 0 ; i< cherry_array.size() ; i++){
                         System.out.println("this is the cherry - " +i+ "x coordinates "+cherry_array.get(i).getX());
 
