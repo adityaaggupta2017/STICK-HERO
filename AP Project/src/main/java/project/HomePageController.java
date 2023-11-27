@@ -651,6 +651,7 @@ public class HomePageController implements HomeInterface , Rod{
                 group1.getChildren().remove(cherry_array.get(cherry_counter));
                 cherry_array.remove(cherry_array.get(cherry_counter));
 
+                cherry_array.get(cherry_counter).getSound();
             }
         });
         movePlayerForward.play();
