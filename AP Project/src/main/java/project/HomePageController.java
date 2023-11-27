@@ -146,6 +146,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     private int came_behind ;
 
+    private int cherry_counter ;
 
     public static Stage getEndingSceneStage() {
         return endingSceneStage;
@@ -432,7 +433,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         Counter = 0 ;
         group1 = new Group();
-
+        cherry_counter = 0;
         trans = new ScaleTransition();
 
         rod = new Rectangle(5, 100, Color.BLACK) ;
@@ -534,7 +535,7 @@ public class HomePageController implements HomeInterface , Rod{
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
-
+        mediaPlayer.setVolume(0.5);
 
 
 
@@ -611,37 +612,49 @@ public class HomePageController implements HomeInterface , Rod{
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 
         Timeline timeline = new Timeline(keyFrame);
-        timeline.setOnFinished(e->movePlayer());
+        timeline.setOnFinished(e-> {
+            try {
+                movePlayer();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         timeline.play();
 
 
     }
 
-    Runnable cherryCollection = () -> {
 
-        for (Cherry cherry: cherry_array){
-            if (new_player.getBoundsInParent().intersects(cherry.getBoundsInParent())){
-                group1.getChildren().remove(cherry);
-                cherry_array.remove(cherry);
-                increaseCherryCount();
-            }
-        }
-    };
 
     Runnable playerMovement = () -> {
         TranslateTransition movePlayerForward = new TranslateTransition(Duration.millis(1000), new_player);
         movePlayerForward.setByX(rod.getHeight()); // Adjust the distance the player moves forward
 
         movePlayerForward.setOnFinished(event -> movePlatforms());
+        for (int i = 0 ; i<cherry_array.size() ; i++){
+            if (cherry_array.get(i).getX() < Platforms.get(current_Platform+1).getX() && Platforms.get(current_Platform).getX() + Platforms.get(current_Platform).getWidth() < cherry_array.get(i).getX()){
+                cherry_counter = i ;
+                break;
+            }
+        }
+        new_player.boundsInParentProperty().addListener((obs, init_pos,final_pos) -> {
+            if (final_pos.intersects((cherry_array.get(cherry_counter)).getBoundsInParent())){
+                increaseCherryCount();
+                group1.getChildren().remove(cherry_array.get(cherry_counter));
+                cherry_array.remove(cherry_array.get(cherry_counter));
+
+            }
+        });
         movePlayerForward.play();
     };
-    public void movePlayer() {
+    public void movePlayer() throws InterruptedException {
         Thread playerForward = new Thread(playerMovement);
-        Thread cherryThread = new Thread(cherryCollection);
+
 
         playerForward.start();
-        cherryThread.start();
+
+
     }
 
 
@@ -715,14 +728,6 @@ public class HomePageController implements HomeInterface , Rod{
                     for (int i = 0 ; i< cherry_array.size() ; i++){
                         System.out.println("this is the cherry - " +i+ "x coordinates "+cherry_array.get(i).getX());
 
-                    }
-
-                    for (int i = 0 ; i< cherry_array.size() ;i++){
-                        if ((cherry_array.get(i).getX() - came_behind) <= new_player.getX()){
-                            group1.getChildren().remove(cherry_array.get(i));
-                            cherry_array.remove(cherry_array.get(i));
-                            increaseCherryCount();
-                        }
                     }
 
                     String text = dynamicText.getText();
