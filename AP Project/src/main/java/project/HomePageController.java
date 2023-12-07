@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -40,7 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.DoubleUnaryOperator;
+
+
 
 
 public class HomePageController implements HomeInterface , Rod{
@@ -147,6 +152,9 @@ public class HomePageController implements HomeInterface , Rod{
     private int came_behind ;
 
     private int cherry_counter ;
+
+    private final Lock lock = new ReentrantLock();
+
 
     public static Stage getEndingSceneStage() {
         return endingSceneStage;
@@ -279,6 +287,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         scene.setOnKeyPressed(event->{
             if (event.getCode() == KeyCode.S){
+
                 if (rotation_counter % 2 == 0){
                     new_player.flip_player();
                     new_player.setPlayer_down_state(1);
@@ -289,6 +298,7 @@ public class HomePageController implements HomeInterface , Rod{
                     new_player.setPlayer_down_state(0);
                 }
                 rotation_counter++ ;
+
 
             }
         });
@@ -547,6 +557,8 @@ public class HomePageController implements HomeInterface , Rod{
 
 
 
+
+
     }
 //    public static void fadeIn(DoubleProperty volumeProperty, double d1, double d2) {
 //        // Create a Timeline for fade-in effect
@@ -619,6 +631,8 @@ public class HomePageController implements HomeInterface , Rod{
         KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 
         Timeline timeline = new Timeline(keyFrame);
+
+
         timeline.setOnFinished(e-> {
             try {
                 movePlayer();
@@ -632,9 +646,8 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
 
-
-
     Runnable playerMovement = () -> {
+
         TranslateTransition movePlayerForward = new TranslateTransition(Duration.millis(1000), new_player);
         movePlayerForward.setByX(rod.getHeight()); // Adjust the distance the player moves forward
 
@@ -656,9 +669,9 @@ public class HomePageController implements HomeInterface , Rod{
         });
         movePlayerForward.play();
     };
+
     public void movePlayer() throws InterruptedException {
         Thread playerForward = new Thread(playerMovement);
-
 
         playerForward.start();
 
@@ -862,7 +875,7 @@ public class HomePageController implements HomeInterface , Rod{
         Parent EndingSceneRoot = loader.load();
         endingSceneStage = new Stage();
         endingSceneStage.initModality(Modality.APPLICATION_MODAL);
-        endingSceneStage.initOwner(stage);
+//        endingSceneStage.initOwner(stage);
         Scene endingScene = new Scene(EndingSceneRoot);
         Image icon = new Image("stickhero_charcater-removebg-preview.png") ;
         endingSceneStage.getIcons().add(icon);
@@ -912,6 +925,18 @@ public class HomePageController implements HomeInterface , Rod{
         setDynamicCherryText(x+1);
 
     }
+
+
+    public void clearAll(ActionEvent event) throws IOException {
+        endingSceneStage.close();
+        Platforms.clear();
+        group1.getChildren().clear();
+        endingSceneStage.close();
+        general_initializer();
+
+
+    }
+
 
 
 
