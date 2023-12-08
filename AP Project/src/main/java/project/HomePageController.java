@@ -277,7 +277,7 @@ public class HomePageController implements HomeInterface , Rod{
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
 
         scene.setOnKeyPressed(event->{
-            if (event.getCode() == KeyCode.S ){
+            if (event.getCode() == KeyCode.S && !(isPlayerOnPlatform())){
                 if (rotation_counter % 2 == 0){
                     new_player.flip_player();
                     new_player.setPlayer_down_state(1);
@@ -927,7 +927,14 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
 
-
+    private boolean isPlayerOnPlatform() {
+        for (Rectangle platform : Platforms) {
+            if (new_player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
