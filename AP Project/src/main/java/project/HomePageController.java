@@ -657,6 +657,7 @@ public class HomePageController implements HomeInterface , Rod{
                 cherry_array.get(cherry_counter).getSound();
             }
         });
+
         movePlayerForward.play();
     };
 
@@ -672,6 +673,14 @@ public class HomePageController implements HomeInterface , Rod{
 
     public void movePlatforms(){
 
+        if (isPlayerOnPlatform() && new_player.getPlayer_down_state() == 1){
+            new_player.player_fall();
+            try {
+                Ending_Scene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         TranslateTransition movePlayerBackwards = new TranslateTransition(Duration.millis(500), new_player);
         movePlayerBackwards.setByX(-rod.getHeight());
         TransitionArray.add(movePlayerBackwards);
@@ -720,82 +729,73 @@ public class HomePageController implements HomeInterface , Rod{
 
             }
             else{
-                if (new_player.getPlayer_down_state() == 1){
-                    System.out.println("died");
-                    new_player.player_fall();
-                    try {
-                        Ending_Scene();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else{
-
-                    double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
 
 
-                    System.out.println("This is the x coordinate the player: " + new_player.getX());
-
-                    for (int i = 0 ; i< cherry_array.size() ; i++){
-                        System.out.println("this is the cherry - " +i+ "x coordinates "+cherry_array.get(i).getX());
-
-                    }
-
-                    String text = dynamicText.getText();
-                    int x = 0;
-                    try{
-                        x = Integer.parseInt(text);
-                    }
-                    catch (NumberFormatException e){
-                        e.printStackTrace();
-                    }
-
-                    setDynamicText(x+1);
+                double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();
 
 
-                    System.out.println("hjfefe");
+                System.out.println("This is the x coordinate the player: " + new_player.getX());
 
-
-                    Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
-                    new_rod.setHeight(2);
-                    new_rod.setX(96);
-                    new_rod.setY(457);
-
-
-
-                    TransitionArray.clear();
-
-                    for (int i = 0; i<Platforms.size() ; i++) {
-                        TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
-                        moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
-                        System.out.println("l1");
-                        TransitionArray.add(moveTransition);
-                        System.out.println("l2");
-                    }
-
-                    for (int i = 0 ; i <cherry_array.size() ;i++){
-                        TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , cherry_array.get(i));
-                        moveTransition.setByX(-newX);
-                        TransitionArray.add(moveTransition);
-                    }
-
-                    TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
-                    moveRod1.setByX(-newX);
-                    TransitionArray.add(moveRod1);
-
-                    for (int i = 0; i<TransitionArray.size() ; i++){
-                        TransitionArray.get(i).play();
-                    }
-
-                    TransitionArray.clear();
-
-                    rod = new_rod;
-
-                    group1.getChildren().add(rod);
-
-                    current_Platform ++ ;
+                for (int i = 0 ; i< cherry_array.size() ; i++){
+                    System.out.println("this is the cherry - " +i+ "x coordinates "+cherry_array.get(i).getX());
 
                 }
+
+                String text = dynamicText.getText();
+                int x = 0;
+                try{
+                    x = Integer.parseInt(text);
+                }
+                catch (NumberFormatException e){
+                    e.printStackTrace();
+                }
+
+                setDynamicText(x+1);
+
+
+                System.out.println("hjfefe");
+
+
+                Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
+                new_rod.setHeight(2);
+                new_rod.setX(96);
+                new_rod.setY(457);
+
+
+
+                TransitionArray.clear();
+
+                for (int i = 0; i<Platforms.size() ; i++) {
+                    TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , Platforms.get(i));
+                    moveTransition.setByX(-newX); // Adjust the movement speed of rectangles
+                    System.out.println("l1");
+                    TransitionArray.add(moveTransition);
+                    System.out.println("l2");
+                }
+
+                for (int i = 0 ; i <cherry_array.size() ;i++){
+                    TranslateTransition moveTransition = new TranslateTransition(Duration.millis(500) , cherry_array.get(i));
+                    moveTransition.setByX(-newX);
+                    TransitionArray.add(moveTransition);
+                }
+
+                TranslateTransition moveRod1 = new TranslateTransition(Duration.millis(500), rod);
+                moveRod1.setByX(-newX);
+                TransitionArray.add(moveRod1);
+
+                for (int i = 0; i<TransitionArray.size() ; i++){
+                    TransitionArray.get(i).play();
+                }
+
+                TransitionArray.clear();
+
+                rod = new_rod;
+
+                group1.getChildren().add(rod);
+
+                current_Platform ++ ;
+
+
 
 
             }
@@ -935,6 +935,7 @@ public class HomePageController implements HomeInterface , Rod{
         }
         return false;
     }
+
 
 
 
