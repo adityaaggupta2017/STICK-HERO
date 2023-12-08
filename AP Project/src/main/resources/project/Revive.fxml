@@ -12,7 +12,7 @@
             <font>
                 <Font name="System Bold" size="18.0" />
             </font></Text>
-        <Button layoutX="94.0" layoutY="183.0" mnemonicParsing="false" onAction="#yes" prefHeight="70.0" prefWidth="78.0" style="-fx-background-radius: 10; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-border-width: 3;">
+        <Button fx:id="myButton" layoutX="94.0" layoutY="183.0" mnemonicParsing="false" onAction="#yes" prefHeight="70.0" prefWidth="78.0" style="-fx-background-radius: 10; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-border-width: 3;">
          <graphic>
             <Label text="YES" textFill="#3b7825">
                <font>

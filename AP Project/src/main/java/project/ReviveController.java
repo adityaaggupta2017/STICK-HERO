@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -19,10 +20,23 @@ public class ReviveController extends EndingScreenController{
     @FXML
     private Label cherry_count = new Label("0");
 
+    @FXML
+    private Button myButton = new Button();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             cherry_count.setText(String.valueOf(Player.getPlayerState().get(2)));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            if (Player.getPlayerState().get(2) < 10){
+                myButton.setStyle("-fx-background-color: red;");
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
@@ -41,8 +55,6 @@ public class ReviveController extends EndingScreenController{
             updateLabelTextInPreviousStage();
 
         }
-
-
 
 
 
