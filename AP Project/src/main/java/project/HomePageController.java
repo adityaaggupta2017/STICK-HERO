@@ -161,7 +161,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     public void setDynamicText(int dynamicText) {
 
-        String path_score = "AP Project\\src\\main\\java\\project\\InGameSounds\\score.mp3";
+        String path_score = "src\\main\\java\\project\\InGameSounds\\score.mp3";
         Media media_score = new Media(new File(path_score).toURI().toString());
         MediaPlayer mediaPlayer_score = new MediaPlayer(media_score);
 
@@ -537,7 +537,7 @@ public class HomePageController implements HomeInterface , Rod{
         if (PauseMenuController.getNewMediaPlayer() !=null){
             PauseMenuController.getNewMediaPlayer().stop();
         }
-        String path = "AP Project\\src\\main\\java\\project\\background_music_new.mp3";
+        String path = "src\\main\\java\\project\\background_music_new.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -833,8 +833,10 @@ public class HomePageController implements HomeInterface , Rod{
         Scene pauseMenuScene = new Scene(pauseMenuRoot);
         Image icon = new Image("stickhero_charcater-removebg-preview.png") ;
         pauseMenuStage.getIcons().add(icon);
-        pauseMenuStage.setWidth(400);
-        pauseMenuStage.setHeight(300);
+        pauseMenuScene.setFill(Color.TRANSPARENT);
+        pauseMenuStage.initStyle(StageStyle.TRANSPARENT);
+//        pauseMenuStage.setWidth(400);
+//        pauseMenuStage.setHeight(300);
         pauseMenuStage.setResizable(false);
         BoxBlur blur = new BoxBlur(3,3,3);
         scene.getRoot().setEffect(blur);
@@ -869,10 +871,12 @@ public class HomePageController implements HomeInterface , Rod{
         Scene endingScene = new Scene(EndingSceneRoot);
         Image icon = new Image("stickhero_charcater-removebg-preview.png") ;
         endingSceneStage.getIcons().add(icon);
+        endingScene.setFill(Color.TRANSPARENT);
+        endingSceneStage.initStyle(StageStyle.TRANSPARENT);
 
 
-        endingSceneStage.setWidth(500);
-        endingSceneStage.setHeight(800);
+//        endingSceneStage.setWidth(500);
+//        endingSceneStage.setHeight(800);
         endingSceneStage.setResizable(false);
         BoxBlur blur = new BoxBlur(3,3,3);
 //        scene.getRoot().setEffect(blur);

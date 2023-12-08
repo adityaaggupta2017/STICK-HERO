@@ -126,7 +126,7 @@ public class Player extends ImageView implements Serializable {
         playerFall.setCycleCount(1);
         playerFall.setAutoReverse(false);
 
-        String path_dead = "AP Project\\src\\main\\java\\project\\InGameSounds\\dead.wav";
+        String path_dead = "src\\main\\java\\project\\InGameSounds\\dead.wav";
         Media media_dead = new Media(new File(path_dead).toURI().toString());
         MediaPlayer mediaPlayer_dead = new MediaPlayer(media_dead);
         playerFall.setOnFinished(event -> {

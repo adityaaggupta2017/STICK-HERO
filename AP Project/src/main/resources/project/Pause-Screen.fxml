@@ -8,13 +8,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="317.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.PauseMenuController">
+<AnchorPane prefHeight="300.0" prefWidth="400.0" style="-fx-border-color: BLACK; -fx-border-width: 5; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.PauseMenuController">
     <children>
-        <Text layoutX="150.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE MENU" wrappingWidth="113.13671875">
+        <Text layoutX="120.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE MENU" wrappingWidth="159.13671875">
             <font>
-                <Font size="18.0" />
+                <Font name="System Bold" size="24.0" />
             </font></Text>
-        <Button layoutX="64.0" layoutY="165.0" mnemonicParsing="false" onAction="#HomePage" prefHeight="64.0" prefWidth="78.0">
+        <Button layoutX="94.0" layoutY="183.0" mnemonicParsing="false" onAction="#HomePage" prefHeight="70.0" prefWidth="78.0" style="-fx-background-radius: 10; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-border-width: 3;">
          <graphic>
             <ImageView fitHeight="52.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -22,7 +22,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Button layoutX="263.0" layoutY="168.0" mnemonicParsing="false" onAction="#resumeGame" prefHeight="64.0" prefWidth="78.0">
+        <Button layoutX="240.0" layoutY="183.0" mnemonicParsing="false" onAction="#resumeGame" prefHeight="64.0" prefWidth="78.0" style="-fx-background-radius: 10; -fx-border-color: BLACK; -fx-border-radius: 10; -fx-border-width: 3;">
          <graphic>
             <ImageView fitHeight="56.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,14 +30,14 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <Label layoutX="103.0" layoutY="90.0" prefHeight="26.0" prefWidth="124.0" text="CURRENT SCORE" textFill="#39228f">
+        <Label layoutX="87.0" layoutY="61.0" prefHeight="113.0" prefWidth="206.0" text="CURRENT SCORE :" textFill="#030303">
             <font>
-                <Font name="Calibri Italic" size="14.0" />
+                <Font name="Calibri" size="24.0" />
             </font>
         </Label>
-        <Label layoutX="240.0" layoutY="90.0" prefHeight="24.0" prefWidth="27.0" text="20">
+        <Label layoutX="279.0" layoutY="100.0" prefHeight="24.0" prefWidth="27.0" text="20">
             <font>
-                <Font size="14.0" />
+                <Font size="24.0" />
             </font>
         </Label>
     </children>
