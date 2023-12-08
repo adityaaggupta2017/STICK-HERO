@@ -4,7 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class PauseMenuController extends HomePageController{
 //        stage.setScene(scene);
 ////        System.out.println("hello");
 //        stage.show();
-        String path = "src\\main\\java\\project\\Main Menu.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
         new_media = new Media(new File(path).toURI().toString());
         new_media_player = new MediaPlayer(new_media);
         new_media_player.setCycleCount(MediaPlayer.INDEFINITE);
@@ -46,7 +48,9 @@ public class PauseMenuController extends HomePageController{
 
         Stage new_stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("Home-Page.fxml"));
-        Scene new_scene = new Scene(fxmlLoader.load(), 635, 800);
+        Scene new_scene = new Scene(fxmlLoader.load());
+        new_scene.setFill(Color.TRANSPARENT);
+        new_stage.initStyle(StageStyle.TRANSPARENT);
         setScene(new_scene);
         new_stage.setScene(new_scene);
         new_stage.show();

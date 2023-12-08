@@ -101,7 +101,7 @@ public class HomePageController implements HomeInterface , Rod{
     private static final Duration ROTATE_DURATION = Duration.seconds(2);
 
 
-    private int current_Platform = 0;
+    private static int current_Platform = 0;
 
     private double rod_length = 0;
 
@@ -129,7 +129,7 @@ public class HomePageController implements HomeInterface , Rod{
     private static int rotation_counter ;
 
     @FXML
-    private Text dynamicText ;
+    private Text dynamicText = new Text("0") ;
 
     private static Stage endingSceneStage ;
 
@@ -161,7 +161,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     public void setDynamicText(int dynamicText) {
 
-        String path_score = "src\\main\\java\\project\\InGameSounds\\score.mp3";
+        String path_score = "AP Project\\src\\main\\java\\project\\InGameSounds\\score.mp3";
         Media media_score = new Media(new File(path_score).toURI().toString());
         MediaPlayer mediaPlayer_score = new MediaPlayer(media_score);
 
@@ -477,28 +477,35 @@ public class HomePageController implements HomeInterface , Rod{
 
             }
             if (i != 0) {
-                if (CherryGetter == 2){
 
-                    new_cherry = new Cherry() ;
-                    new_cherry.setX(i*300 - 50);
-                    new_cherry.setY(469);
 
-                }
-
-                rectangle.setX(i * 300 + random1.nextInt(200)); // Set X position based on the loop index
+                rectangle.setX(i * 300 + random1.nextInt(100)); // Set X position based on the loop index
             }
             else{
                 rectangle.setX(0);
             }
             rectangle.setY(459); // Set Y position
 
+
+            Platforms.add(rectangle);
+            group1.getChildren().add(rectangle);
+
+            if (i != 0){
+                if (CherryGetter == 2){
+
+                    new_cherry = new Cherry() ;
+                    new_cherry.setX(new Random().nextDouble(Platforms.get(i-1).getX() + Platforms.get(i-1).getWidth() , Platforms.get(i).getX() - new_cherry.getFitWidth()));
+                    new_cherry.setY(469);
+
+                }
+            }
+
             if (new_cherry != null){
                 cherry_array.add(new_cherry);
                 group1.getChildren().add(new_cherry);
             }
 
-            Platforms.add(rectangle);
-            group1.getChildren().add(rectangle);
+
         }
         group1.getChildren().add(new_player.getPlayerCherryProperties());
         group1.getChildren().add(new_player);
@@ -537,7 +544,7 @@ public class HomePageController implements HomeInterface , Rod{
         if (PauseMenuController.getNewMediaPlayer() !=null){
             PauseMenuController.getNewMediaPlayer().stop();
         }
-        String path = "src\\main\\java\\project\\background_music_new.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\background_music_new.mp3";
         media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -878,8 +885,8 @@ public class HomePageController implements HomeInterface , Rod{
 //        endingSceneStage.setWidth(500);
 //        endingSceneStage.setHeight(800);
         endingSceneStage.setResizable(false);
-        BoxBlur blur = new BoxBlur(3,3,3);
-//        scene.getRoot().setEffect(blur);
+        BoxBlur blur = new BoxBlur(10, 10, 5);
+        scene.getRoot().setEffect(blur);
 
 
         FadeTransition fadeInTransition = new FadeTransition(Duration.millis(1000), EndingSceneRoot);
@@ -888,6 +895,7 @@ public class HomePageController implements HomeInterface , Rod{
 
         // Play the fade in transition
         fadeInTransition.play();
+
 
 
 
@@ -922,11 +930,29 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     public void clearAll(ActionEvent event) throws IOException {
-        endingSceneStage.close();
+        Text dynamicText = getDynamicText();
+        cherry_array.clear();
+        extendTimeline.stop();
+        dropTimeline.stop();
+        moveTimeLine.stop();
+
+        current_Platform = 0;
+
+        // Reinitialize game elements
+        getScene().getRoot().setEffect(null);
+
         Platforms.clear();
+
         group1.getChildren().clear();
         endingSceneStage.close();
+
+        System.out.println("This is the dynamic Text:" + dynamicText.getText());
+        dynamicText.setText("0");
         general_initializer();
+
+
+
+
 
 
     }

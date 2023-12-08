@@ -23,7 +23,7 @@ public class Cherry extends ImageView {
     }
 
     public void getSound(){
-        String path_cherry = "src\\main\\java\\project\\InGameSounds\\cherry_sound.mp3";
+        String path_cherry = "AP Project\\src\\main\\java\\project\\InGameSounds\\cherry_sound.mp3";
         Media media_cherry = new Media(new File(path_cherry).toURI().toString());
         MediaPlayer mediaPlayer_dead = new MediaPlayer(media_cherry);
 

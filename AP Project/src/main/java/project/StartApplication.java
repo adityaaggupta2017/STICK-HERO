@@ -27,7 +27,7 @@ public class StartApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        String path = "src\\main\\java\\project\\Main Menu.mp3";
+        String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
         Media media = new Media(new File(path).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -35,7 +35,7 @@ public class StartApplication extends Application {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("Home-Page.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load() );
         stage.setTitle("  STICK HERO ");
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
