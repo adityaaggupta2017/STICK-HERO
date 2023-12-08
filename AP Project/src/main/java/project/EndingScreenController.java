@@ -45,6 +45,7 @@ public class EndingScreenController extends HomePageController{
     }
     @FXML
     public void restartTheGame(ActionEvent event2) throws IOException {
+
         clearAll(event2);
 
 

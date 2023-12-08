@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,11 +37,11 @@
       <StackPane layoutX="195.0" layoutY="80.0" prefHeight="60.0" prefWidth="100.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e49775" height="71.0" opacity="0.16" stroke="#170101" strokeType="INSIDE" strokeWidth="100.0" width="110.0" />
-            <Text fx:id="dynamicText" fill="#141313" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+            <Label fx:id="dynamicText" text="0" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
-            </Text>
+            </Label>
          </children>
       </StackPane>
       <StackPane layoutX="353.0" layoutY="121.0" prefHeight="60.0" prefWidth="100.0" />

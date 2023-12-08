@@ -129,7 +129,7 @@ public class HomePageController implements HomeInterface , Rod{
     private static int rotation_counter ;
 
     @FXML
-    private Text dynamicText = new Text("0") ;
+    private Label dynamicText = new Label("0") ;
 
     private static Stage endingSceneStage ;
 
@@ -155,8 +155,8 @@ public class HomePageController implements HomeInterface , Rod{
         HomePageController.endingSceneStage = endingSceneStage;
     }
 
-    public Text getDynamicText() {
-        return dynamicText;
+    public Label getDynamicText() {
+        return this.dynamicText;
     }
 
     public void setDynamicText(int dynamicText) {
@@ -748,7 +748,7 @@ public class HomePageController implements HomeInterface , Rod{
 
                 }
 
-                String text = dynamicText.getText();
+                String text = this.dynamicText.getText();
                 int x = 0;
                 try{
                     x = Integer.parseInt(text);
@@ -870,6 +870,8 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     public void Ending_Scene() throws IOException {
+
+        setDynamicText(0);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ending_screen.fxml"));
         Parent EndingSceneRoot = loader.load();
         endingSceneStage = new Stage();
@@ -930,7 +932,6 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     public void clearAll(ActionEvent event) throws IOException {
-        Text dynamicText = getDynamicText();
         cherry_array.clear();
         extendTimeline.stop();
         dropTimeline.stop();
@@ -944,10 +945,11 @@ public class HomePageController implements HomeInterface , Rod{
         Platforms.clear();
 
         group1.getChildren().clear();
-        endingSceneStage.close();
 
-        System.out.println("This is the dynamic Text:" + dynamicText.getText());
-        dynamicText.setText("0");
+
+        setDynamicText(0);
+
+        endingSceneStage.close();
         general_initializer();
 
 
