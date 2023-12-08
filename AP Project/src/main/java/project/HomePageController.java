@@ -1,14 +1,11 @@
 package project;
 
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,19 +17,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 
 import java.io.File;
@@ -41,11 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.DoubleUnaryOperator;
-
-
 
 
 public class HomePageController implements HomeInterface , Rod{
@@ -286,8 +277,7 @@ public class HomePageController implements HomeInterface , Rod{
         scene = new Scene(new Pane(), stage.getScene().getWidth(), stage.getScene().getHeight());
 
         scene.setOnKeyPressed(event->{
-            if (event.getCode() == KeyCode.S){
-
+            if (event.getCode() == KeyCode.S ){
                 if (rotation_counter % 2 == 0){
                     new_player.flip_player();
                     new_player.setPlayer_down_state(1);
@@ -461,7 +451,7 @@ public class HomePageController implements HomeInterface , Rod{
         new_PauseMenu = new PauseMenu(new_player);
 
         TransitionArray = new ArrayList<>();
-        new_player.setX(10);
+        new_player.setX(37);
         new_player.setY(385);
 
         Platforms = new ArrayList<Rectangle>();
@@ -768,7 +758,7 @@ public class HomePageController implements HomeInterface , Rod{
 
                     Rectangle new_rod = new Rectangle(5, 100, Color.BLACK);
                     new_rod.setHeight(2);
-                    new_rod.setX(new_player.getX()+85);
+                    new_rod.setX(96);
                     new_rod.setY(457);
 
 
@@ -936,6 +926,7 @@ public class HomePageController implements HomeInterface , Rod{
 
 
     }
+
 
 
 

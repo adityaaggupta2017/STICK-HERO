@@ -82,11 +82,11 @@ public class Player extends ImageView implements Serializable {
         playerCherryProperties = new Cherry();
         this.player_down_state = 0;
         // Set the default image for the player
-        Image defaultImage = new Image("hero.png");
+        Image defaultImage = new Image("hero (2).png");
         setImage(defaultImage);
 
-        double newWidth = 130;
-        double newHeight = 80;
+        double newWidth = 60;
+        double newHeight = 75;
 
         setFitWidth(newWidth);
         setFitHeight(newHeight);
