@@ -927,7 +927,7 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
 
-    private boolean isPlayerOnPlatform() {
+    public boolean isPlayerOnPlatform() {
         for (Rectangle platform : Platforms) {
             if (new_player.getBoundsInParent().intersects(platform.getBoundsInParent())) {
                 return true;
