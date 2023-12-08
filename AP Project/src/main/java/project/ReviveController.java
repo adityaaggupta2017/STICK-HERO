@@ -31,11 +31,18 @@ public class ReviveController extends EndingScreenController{
     }
 
     public void yes(ActionEvent event4) throws Exception {
-        getReviveSceneStage().close();
-        revivingPlayer(event4);
 
-        openPreviousStage();
-        updateLabelTextInPreviousStage();
+        if (Player.getPlayerState().get(2) >= 10) {
+
+            getReviveSceneStage().close();
+            revivingPlayer(event4);
+
+            openPreviousStage();
+            updateLabelTextInPreviousStage();
+
+        }
+
+
 
 
 
