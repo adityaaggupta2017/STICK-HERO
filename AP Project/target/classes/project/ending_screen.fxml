@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="424.0" style="-fx-border-color: BLACK; -fx-border-width: 5; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.EndingScreenController">
    <children>
-      <Button layoutX="101.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToHomePage" prefHeight="91.0" prefWidth="99.0" style="-fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20; -fx-border-width: 3;">
+      <Button layoutX="46.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToHomePage" prefHeight="91.0" prefWidth="99.0" style="-fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20; -fx-border-width: 3;">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -19,7 +19,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="243.0" layoutY="323.0" mnemonicParsing="false" onAction="#restartTheGame" prefHeight="86.0" prefWidth="94.0" style="-fx-border-color: BLACK; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-width: 3;">
+      <Button layoutX="284.0" layoutY="323.0" mnemonicParsing="false" onAction="#restartTheGame" prefHeight="86.0" prefWidth="94.0" style="-fx-border-color: BLACK; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-width: 3;">
          <graphic>
             <ImageView fitHeight="77.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -38,7 +38,7 @@
             <Font name="Calibri" size="24.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="200.0" layoutY="232.0" prefHeight="24.0" prefWidth="27.0" text="20">
+      <Label fx:id="CurrentScore" alignment="CENTER" layoutX="200.0" layoutY="232.0" prefHeight="24.0" prefWidth="27.0" text="20">
          <font>
             <Font size="24.0" />
          </font>
@@ -48,10 +48,19 @@
             <Font name="Calibri" size="24.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="200.0" layoutY="159.0" prefHeight="24.0" prefWidth="27.0" text="50">
+      <Label fx:id="HighestScore" alignment="CENTER" layoutX="200.0" layoutY="159.0" prefHeight="24.0" prefWidth="27.0" text="50">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <Button layoutX="165.0" layoutY="324.0" mnemonicParsing="false" onAction="#revivePlayer" prefHeight="91.0" prefWidth="100.0" style="-fx-border-color: BLACK; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-width: 3;">
+         <graphic>
+            <ImageView fitHeight="79.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../revive.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

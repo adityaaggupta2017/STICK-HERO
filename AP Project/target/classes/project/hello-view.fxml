@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#handleMousePressed" onMouseReleased="#handleMouseReleased" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
-      <ImageView blendMode="SRC_ATOP" fitHeight="661.0" fitWidth="3800.0" layoutY="1.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background_image" blendMode="SRC_ATOP" fitHeight="661.0" fitWidth="3800.0" layoutY="1.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../background_image2.jpeg" />
          </image>

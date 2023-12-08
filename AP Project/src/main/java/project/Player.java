@@ -133,7 +133,7 @@ public class Player extends ImageView implements Serializable {
     }
 
     public void player_fall(){
-        TranslateTransition playerFall = new TranslateTransition(Duration.millis(1000), this);
+        TranslateTransition playerFall = new TranslateTransition(Duration.millis(500), this);
         playerFall.setToY(500);
         playerFall.setCycleCount(1);
         playerFall.setAutoReverse(false);

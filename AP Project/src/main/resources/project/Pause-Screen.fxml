@@ -35,7 +35,7 @@
                 <Font name="Calibri" size="24.0" />
             </font>
         </Label>
-        <Label layoutX="279.0" layoutY="100.0" prefHeight="24.0" prefWidth="27.0" text="20">
+        <Label fx:id="currentScore" layoutX="279.0" layoutY="100.0" prefHeight="24.0" prefWidth="27.0" text="20">
             <font>
                 <Font size="24.0" />
             </font>
