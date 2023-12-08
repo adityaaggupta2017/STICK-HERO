@@ -10,7 +10,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMousePressed="#handleMousePressed" onMouseReleased="#handleMouseReleased" prefHeight="661.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.HomePageController">
    <children>
@@ -44,17 +43,20 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane layoutX="353.0" layoutY="121.0" prefHeight="60.0" prefWidth="100.0" />
       <Group layoutX="377.0" layoutY="50.0">
          <children>
             <Circle fill="DODGERBLUE" opacity="0.0" radius="42.0" stroke="BLACK" strokeType="INSIDE" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e49775" height="37.0" layoutY="-22.0" opacity="0.16" stroke="#170101" strokeType="INSIDE" strokeWidth="100.0" width="116.0" />
-            <Text fx:id="dynamicCherryText" fill="#141313" layoutX="65.0" layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Text>
             <Button layoutX="-11.0" layoutY="-30.0" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 30; -fx-border-color: BLACK; -fx-border-width: 3; -fx-border-radius: 30;" />
+            <StackPane layoutX="15.0" layoutY="-33.0" prefHeight="60.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="dynamicCherryText" text="0">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
          </children>
       </Group>
    </children>

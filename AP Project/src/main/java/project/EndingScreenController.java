@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class EndingScreenController extends HomePageController{
@@ -19,12 +20,16 @@ public class EndingScreenController extends HomePageController{
     private static Media new_media;
     private static MediaPlayer new_media_player;
 
+    public EndingScreenController() throws FileNotFoundException, ClassNotFoundException {
+    }
+
     public static MediaPlayer getNewMediaPlayer(){
         return new_media_player;
     }
 
     @FXML
     public void returnToHomePage() throws IOException {
+        setCurrent_Platform(0);
         String path = "AP Project\\src\\main\\java\\project\\Main Menu.mp3";
         new_media = new Media(new File(path).toURI().toString());
         new_media_player = new MediaPlayer(new_media);
@@ -44,7 +49,7 @@ public class EndingScreenController extends HomePageController{
         getEndingSceneStage().close();
     }
     @FXML
-    public void restartTheGame(ActionEvent event2) throws IOException {
+    public void restartTheGame(ActionEvent event2) throws IOException, ClassNotFoundException {
 
         clearAll(event2);
 

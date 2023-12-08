@@ -29,6 +29,7 @@ import javafx.scene.media.MediaPlayer;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +139,7 @@ public class HomePageController implements HomeInterface , Rod{
     private static int CherryGetter = 0;
 
     @FXML
-    private Text dynamicCherryText ;
+    private Label dynamicCherryText = new Label("0");
 
     private int came_behind ;
 
@@ -146,6 +147,21 @@ public class HomePageController implements HomeInterface , Rod{
 
     private final Lock lock = new ReentrantLock();
 
+    private int last_score = 0;
+
+    private int highest_score = 0;
+
+    private int total_cherry_count = 0;
+
+
+
+    public static int getCurrent_Platform() {
+        return current_Platform;
+    }
+
+    public static void setCurrent_Platform(int current_Platform) {
+        HomePageController.current_Platform = current_Platform;
+    }
 
     public static Stage getEndingSceneStage() {
         return endingSceneStage;
@@ -170,7 +186,7 @@ public class HomePageController implements HomeInterface , Rod{
         getDynamicText().setText(Integer.toString(dynamicText));
     }
 
-    public Text getDynamicCherryText() {
+    public Label getDynamicCherryText() {
         return dynamicCherryText;
     }
 
@@ -246,7 +262,7 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     @FXML
-    public void switchToRunning(ActionEvent event1) throws IOException {
+    public void switchToRunning(ActionEvent event1) throws IOException, ClassNotFoundException {
         // Load the new FXML file
 //        fadeOut(volumeProperty1,1.0,0.0);
         if (mediaPlayer != null){
@@ -311,6 +327,8 @@ public class HomePageController implements HomeInterface , Rod{
             scene.setRoot(newRoot);
 
             fadeTransition.play();
+
+
         });
 
         System.out.println("hello3");
@@ -321,10 +339,10 @@ public class HomePageController implements HomeInterface , Rod{
         System.out.println("6");
 
 
-
         // Play the fade out transition
 //        fadeOut(volumeProperty2,1.0,0.0);
         fadeOutTransition.play();
+
 
 
         //        RunningGameController main_game  = new RunningGameController();
@@ -336,6 +354,9 @@ public class HomePageController implements HomeInterface , Rod{
 //        main_game.start_generating();
     }
 
+    public void changeCherries() throws FileNotFoundException, ClassNotFoundException {
+        setDynamicCherryText(Player.getPlayerState().get(2));
+    }
     @FXML
     private void OnExit(ActionEvent event) throws IOException {
 //        fadeOut(volumeProperty1,1.0,0.5);
@@ -425,7 +446,10 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
     @FXML
-    public void general_initializer() {
+    public void general_initializer() throws FileNotFoundException, ClassNotFoundException {
+
+
+
         System.out.println("--------------------------------------------");
         Random random1 = new Random();
         cherry_array = new ArrayList<Cherry>();
@@ -446,6 +470,8 @@ public class HomePageController implements HomeInterface , Rod{
         rod = new Rectangle(5, 100, Color.BLACK) ;
 
         new_player = new Player();
+
+
         new_player.setX_coordinate(new_player.getX());
 
         new_PauseMenu = new PauseMenu(new_player);
@@ -525,7 +551,13 @@ public class HomePageController implements HomeInterface , Rod{
                 new KeyFrame(Duration.millis(16), event -> dropRod())
         );
 
-        moveTimeLine = new Timeline(new KeyFrame(Duration.millis(16) , event -> movePlatforms()));
+        moveTimeLine = new Timeline(new KeyFrame(Duration.millis(16) , event -> {
+            try {
+                movePlatforms();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }));
         dropTimeline.setCycleCount(Timeline.INDEFINITE);
 
         rod.setX(95);
@@ -584,8 +616,7 @@ public class HomePageController implements HomeInterface , Rod{
         CharacterController.FlipCharacter();
     }
     @FXML
-    private void handleMousePressed(MouseEvent event) {
-
+    private void handleMousePressed(MouseEvent event) throws FileNotFoundException, ClassNotFoundException {
         // Start extending the rod when the mouse is pressed
         extendTimeline.play();
     }
@@ -648,7 +679,13 @@ public class HomePageController implements HomeInterface , Rod{
         TranslateTransition movePlayerForward = new TranslateTransition(Duration.millis(1000), new_player);
         movePlayerForward.setByX(rod.getHeight()); // Adjust the distance the player moves forward
 
-        movePlayerForward.setOnFinished(event -> movePlatforms());
+        movePlayerForward.setOnFinished(event -> {
+            try {
+                movePlatforms();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         for (int i = 0 ; i<cherry_array.size() ; i++){
             if (cherry_array.get(i).getX() < Platforms.get(current_Platform+1).getX() && Platforms.get(current_Platform).getX() + Platforms.get(current_Platform).getWidth() < cherry_array.get(i).getX()){
                 cherry_counter = i ;
@@ -678,7 +715,7 @@ public class HomePageController implements HomeInterface , Rod{
 
 
 
-    public void movePlatforms(){
+    public void movePlatforms() throws ClassNotFoundException{
 
         if (isPlayerOnPlatform() && new_player.getPlayer_down_state() == 1){
             new_player.player_fall();
@@ -731,6 +768,8 @@ public class HomePageController implements HomeInterface , Rod{
                 try {
                     Ending_Scene();
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -869,7 +908,23 @@ public class HomePageController implements HomeInterface , Rod{
 
     }
 
-    public void Ending_Scene() throws IOException {
+    public void Ending_Scene() throws IOException, ClassNotFoundException {
+
+        last_score = Integer.parseInt(dynamicText.getText());
+
+        ArrayList<Integer> values = new_player.getPlayerState();
+        if ( Integer.parseInt(dynamicText.getText()) > values.get(1) ){
+            highest_score = Integer.parseInt(dynamicText.getText()) ;
+
+        }
+        else{
+            highest_score = values.get(1);
+        }
+
+        total_cherry_count = Integer.parseInt(dynamicCherryText.getText());
+
+        new_player.savePlayerState(last_score , highest_score , total_cherry_count);
+
 
         setDynamicText(0);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ending_screen.fxml"));
@@ -931,7 +986,7 @@ public class HomePageController implements HomeInterface , Rod{
     }
 
 
-    public void clearAll(ActionEvent event) throws IOException {
+    public void clearAll(ActionEvent event) throws IOException, ClassNotFoundException {
         cherry_array.clear();
         extendTimeline.stop();
         dropTimeline.stop();

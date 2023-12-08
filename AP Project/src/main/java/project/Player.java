@@ -11,6 +11,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player extends ImageView implements Serializable {
 
@@ -95,11 +97,15 @@ public class Player extends ImageView implements Serializable {
 
     }
 
-    public static void savePlayerState(Player s1) throws IOException {
-        ObjectOutputStream out = null;
+    public static void savePlayerState(int Last_Score , int Highest_Score , int total_cherry_count) throws IOException {
+        PrintWriter out = null;
+
         try{
-            out = new ObjectOutputStream(new FileOutputStream("PlayerState.txt",false));
-            out.writeObject(s1);
+            out = new PrintWriter(new FileWriter("AP Project/src/main/java/project/PlayerState.txt" ,false));
+            out.println(Last_Score);
+            out.println(Highest_Score);
+            out.println(total_cherry_count);
+
         }
         finally{
             if(out != null) out.close();
@@ -107,17 +113,23 @@ public class Player extends ImageView implements Serializable {
     }
 
     //for serialization and get the saved state of the player
-    public static Player getPlayerState() throws IOException, ClassNotFoundException{
-        Player p1 = null;
-        ObjectInputStream in = null;
-        try{
-            in = new ObjectInputStream(new FileInputStream("PlayerState.txt"));
-            p1 = (Player) in.readObject();
+    public static ArrayList<Integer> getPlayerState() throws ClassNotFoundException , FileNotFoundException{
+        ArrayList<Integer> value_string = new ArrayList<Integer>();
+        Scanner in = null;
+
+        try {
+            in = new Scanner(new BufferedReader(new FileReader("AP Project/src/main/java/project/PlayerState.txt")));
+            while (in.hasNext()){
+                int c1 = Integer.parseInt(in.next());
+                value_string.add(c1);
+            }
         }
-        finally{
-            if(in != null) in.close();
+        finally {
+            if (in != null){
+                in.close();
+            }
         }
-        return p1;
+        return value_string;
     }
 
     public void player_fall(){
