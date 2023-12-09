@@ -28,6 +28,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.junit.Test;
 
 
 import java.io.File;
@@ -38,6 +39,8 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static org.testng.Assert.assertEquals;
 
 
 public class HomePageController implements HomeInterface , Rod , Initializable {
@@ -158,6 +161,27 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
     private static ImageView background_image = new ImageView();
 
     private static FXMLLoader loader ;
+
+    private static int total_right_falls ;
+
+    private static int current_score = 0;
+
+    public static int getCurrent_score() {
+        return current_score;
+    }
+
+    public static void setCurrent_score(int current_score) {
+        HomePageController.current_score = current_score;
+    }
+
+    public static int getTotal_right_falls() {
+        return total_right_falls;
+    }
+
+    public static void setTotal_right_falls(int total_right_falls) {
+        HomePageController.total_right_falls = total_right_falls;
+    }
+
     public static Parent getNewRoot() {
         return newRoot;
     }
@@ -188,6 +212,8 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
 
     public void setDynamicText(int dynamicText) {
 
+        current_score ++;
+
         String path_score = "AP Project\\src\\main\\java\\project\\InGameSounds\\score.mp3";
         Media media_score = new Media(new File(path_score).toURI().toString());
         MediaPlayer mediaPlayer_score = new MediaPlayer(media_score);
@@ -198,6 +224,7 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
     }
 
     public void setDynamicText2(int dynamicText) {
+        current_score = 0;
         getDynamicText().setText(Integer.toString(dynamicText));
     }
 
@@ -282,6 +309,10 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
 
     public static void setLoader(FXMLLoader loader) {
         HomePageController.loader = loader;
+    }
+
+    public static Rectangle getRod() {
+        return rod;
     }
 
     @FXML
@@ -679,11 +710,18 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
                 throw new RuntimeException(e);
             }
         });
-        for (int i = 0 ; i<cherry_array.size() ; i++){
-            if (cherry_array.get(i).getX() < Platforms.get(current_Platform+1).getX() && Platforms.get(current_Platform).getX() + Platforms.get(current_Platform).getWidth() < cherry_array.get(i).getX()){
-                cherry_counter = i ;
+
+        // ITERATOR DESIGN PATTERN HERE .
+
+        Iterator iter = cherry_array.iterator();
+        int i = 0;
+        while (iter.hasNext()){
+            Cherry obj = (Cherry) iter.next();
+            if (obj.getX() < Platforms.get(current_Platform+1).getX() && Platforms.get(current_Platform).getX() + Platforms.get(current_Platform).getWidth() < obj.getX()){
+                cherry_counter =  i;
                 break;
             }
+            i++ ;
         }
         new_player.boundsInParentProperty().addListener((obs, init_pos,final_pos) -> {
             if (final_pos.intersects((cherry_array.get(cherry_counter)).getBoundsInParent())){
@@ -786,6 +824,8 @@ public class HomePageController implements HomeInterface , Rod , Initializable {
 
             }
             else{
+
+                total_right_falls ++ ;
 
 
                 double newX = Platforms.get(current_Platform+1).getX() - Platforms.get(current_Platform).getX() + Platforms.get(current_Platform + 1).getWidth() - rod_length - Platforms.get(current_Platform).getWidth();

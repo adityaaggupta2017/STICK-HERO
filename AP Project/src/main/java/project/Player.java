@@ -19,9 +19,9 @@ public class Player extends ImageView implements Serializable {
     @Serial
     private static final long serialVersionUID = 5L;
 
-    private int player_down_state ;
+    private static int player_down_state ;
     //    private transient CharacterController controls;
-    private Cherry playerCherryProperties;
+    private static Cherry playerCherryProperties;
     private int player_points;
 
 //    private static MediaPlayer mediaPlayer;
@@ -39,7 +39,7 @@ public class Player extends ImageView implements Serializable {
         this.x_coordinate = x_coordinate;
     }
 
-    public int getPlayer_down_state() {
+    public static int getPlayer_down_state() {
         return player_down_state;
     }
 
@@ -47,11 +47,11 @@ public class Player extends ImageView implements Serializable {
         this.player_down_state = player_down_state;
     }
 
-    public Cherry getPlayerCherryProperties() {
+    public static Cherry getPlayerCherryProperties() {
         return playerCherryProperties;
     }
 
-    public Rectangle getCurrent_pillar() {
+    public static Rectangle getCurrent_pillar() {
         return current_pillar;
     }
 
@@ -97,6 +97,7 @@ public class Player extends ImageView implements Serializable {
 
     }
 
+    // DECORATOR DESIGN PATTERN HERE .
     public static void savePlayerState(int Last_Score , int Highest_Score , int total_cherry_count) throws IOException {
         PrintWriter out = null;
 
@@ -113,7 +114,7 @@ public class Player extends ImageView implements Serializable {
     }
 
     //for serialization and get the saved state of the player
-    public static ArrayList<Integer> getPlayerState() throws ClassNotFoundException , FileNotFoundException{
+    public static ArrayList<Integer> getPlayerState() throws ClassNotFoundException , FileNotFoundException {
         ArrayList<Integer> value_string = new ArrayList<Integer>();
         Scanner in = null;
 
